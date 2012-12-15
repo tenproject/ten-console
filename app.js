@@ -1,61 +1,28 @@
 var express = require('express'),
-    http = require('http'),
-    path = require('path'),
-    hbs = require('hbs'),
-    app = express();
+    site = require('./site'),
+    api = require('./api'),
+    database = require('./database');
 
-////////////////////////////////////////////////
-// Express Configuration
-////////////////////////////////////////////////
-app.configure(function(){
-  app.set('port', process.env.PORT || 3000);
-  app.set('views', __dirname + '/views');
-  app.set('view engine', 'html');
-  app.engine('html', hbs.__express);
-  app.use(express.favicon());
-  app.use(express.logger('dev'));
-  app.use(express.bodyParser());
-  app.use(express.methodOverride());
-  app.use(app.router);
-  app.use(express.static(path.join(__dirname, 'public')));
-});
+var app = express();
 
-app.configure('development', function(){
-  app.use(express.errorHandler());
-});
+app.set('view engine', 'jade');
+app.locals.pretty = true;
 
-////////////////////////////////////////////////
-// Handlebars
-////////////////////////////////////////////////
-var blocks = {};
+app.use(express.errorHandler());
+app.use(express.logger('dev'));
+app.use(express.compress());
+app.use(express.bodyParser());
+app.use(express.methodOverride());
+app.use(app.router);
 
-hbs.registerHelper('extend', function(name, context) {
-    var block = blocks[name];
-    if (!block) {
-        block = blocks[name] = [];
-    }
+app.use(express.static(__dirname + '/public'));
+app.use(express.static(__dirname + '/components'));
 
-    block.push(context(this));
-});
+app.get('/', site.index);
 
-hbs.registerHelper('block', function(name) {
-    var val = (blocks[name] || []).join('\n');
+app.get('/api', api.ping);
 
-    // clear the block
-    blocks[name] = [];
-    return val;
-});
+app.get('/api/slides', api.slides.listAll);
+app.get('/api/slides/:id', api.slides.findById);
 
-////////////////////////////////////////////////
-// Router
-////////////////////////////////////////////////
-app.get('/', function(req, res) {
-  res.render('index', { title: 'Express' });
-});
-
-////////////////////////////////////////////////
-// HTTP Server
-////////////////////////////////////////////////
-http.createServer(app).listen(app.get('port'), function(){
-  console.log("Express server listening on port " + app.get('port'));
-});
+app.listen(3000);
