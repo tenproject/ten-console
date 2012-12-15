@@ -3,6 +3,8 @@
   "version": "0.0.0",
   "dependencies": {
     "backbone": "~0.9.9",
-    "underscore": "~1.4.3"
+    "underscore": "~1.4.3",
+    "layoutmanager": "~0.7.3",
+    "handlebars": "~1.0.0-rc.1"
   }
 }

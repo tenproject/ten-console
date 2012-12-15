@@ -1,0 +1,17 @@
+{
+  "name": "handlebars",
+  "version": "1.0.0-rc.1",
+  "main": [
+    "handlebars-1.0.0-rc.1.js",
+    "handlebars.runtime-1.0.0.rc.1.js"
+  ],
+  "dependencies": {},
+  "gitHead": "aed9f1d5e3f6c5e7e357ad42e2a0d5cd241e6068",
+  "_id": "handlebars.js@1.0.0-rc.1",
+  "readme": "ERROR: No README.md file found!",
+  "description": "ERROR: No README.md file found!",
+  "repository": {
+    "type": "git",
+    "url": "git://github.com/components/handlebars.js"
+  }
+}
