@@ -8,8 +8,8 @@ mongoose.connection.once('open', function callback () {
   console.log("Mongoose Connection Open");
 });
 
-var schema = mongoose.Schema({ name: 'string' });
+var slideSchema = mongoose.Schema({ name: 'string' });
 
 module.exports = {
-  Cat: mongoose.model('Cat', schema)
+  Slide: mongoose.model('Slide', slideSchema)
 };

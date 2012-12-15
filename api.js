@@ -8,22 +8,29 @@ exports.ping = function(req, res) {
 
 exports.slides = {
   listAll: function(req, res) {
-    var obj = {
-      id: "12",
-      location: "Trottier",
-      slides: [1, 2, 3]
-    };
-
-    res.json(obj);
+    database.Slide.find({}, function (err, obj) {
+      if (err) return handleError(err);
+      res.json(obj);
+    });
   },
 
   findById: function(req, res) {
     var id = req.params.id;
 
-    database.Cat.findOne({ name: "testing2" }, function (err, obj) {
+    database.Slide.findOne({ name: id }, function (err, obj) {
       if (err) return handleError(err);
       res.json(obj);
     });
 
+  },
+
+  create: function(req, res) {
+    console.log(req.params);
+
+    var slide = new database.Slide({ name: req.params.name || "hello" });
+    slide.save(function (err, obj) {
+      if (err) {}
+      res.json(obj);
+    });
   }
 };

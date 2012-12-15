@@ -24,5 +24,6 @@ app.get('/api', api.ping);
 
 app.get('/api/slides', api.slides.listAll);
 app.get('/api/slides/:id', api.slides.findById);
+app.post('/api/slides', api.slides.create);
 
 app.listen(3000);
