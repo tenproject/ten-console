@@ -8,20 +8,27 @@ html(lang="en")
   body
     // Header
     .container
-      .page-header
-        h1 Ten
-          small  Console
+      .pull-right(style="margin-top: 25px")
+        .ul.nav.nav-pills
+          li: a(href="/") Home
+          li: a(href="/api") API Documentation
+      .clearfix
+        .page-header
+          h1 Ten
+            small  Console
+
+
 
       // Content
       block content
 
     // Dependencies
-    script(src="https://ajax.googleapis.com/ajax/libs/jquery/1.7.2/jquery.min.js")
-    script(src="//netdna.bootstrapcdn.com/twitter-bootstrap/2.2.1/js/bootstrap.min.js")
-    script(src="/underscore/underscore.js")
-    script(src="/handlebars/handlebars-1.0.0-rc.1.js")
-    script(src="/backbone/backbone.js")
-    script(src="/layoutmanager/backbone.layoutmanager.js")
+    block scripts
+      script(src="https://ajax.googleapis.com/ajax/libs/jquery/1.7.2/jquery.min.js")
+      script(src="//netdna.bootstrapcdn.com/twitter-bootstrap/2.2.1/js/bootstrap.min.js")
+      script(src="/underscore/underscore.js")
+      script(src="/handlebars/handlebars-1.0.0-rc.1.js")
+      script(src="/backbone/backbone.js")
+      script(src="/layoutmanager/backbone.layoutmanager.js")
 
-    // Appication Source
-    script(src="/app/app.js")
+      // Appication Source

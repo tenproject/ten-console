@@ -1,24 +1,23 @@
 extends layout
 
 block content
-  .row
-    .span6
-      p Welcome! Here are some API endpoints
-      small GET:
-      ul
-        li: a(href="/api") /api
-        li: a(href="/api/slides") /api/slides
-        li: a(href="/api/slides/hello") /api/slides/hello
+  .main
 
-      small POST:
-      ul
-        li: a(href="/api/slides") /api/slides
-    .span6
-      .main
-
+block append scripts
+  // Templates
   script(type="template", id="content")
-    This is some content...
+    span This is a Backbone View!
 
   script(type="template", id="main")
     h1 Hello
+    #myCarousel.carousel(style="width:300px")
+      .carousel-inner
+        .item.active: img(src="http://twitter.github.com/bootstrap/assets/img/bootstrap-mdo-sfmoma-01.jpg")
+        .item: img(src="http://twitter.github.com/bootstrap/assets/img/bootstrap-mdo-sfmoma-02.jpg")
+        .item: img(src="http://twitter.github.com/bootstrap/assets/img/bootstrap-mdo-sfmoma-03.jpg")
+
+      a.carousel-control.left(href="#myCarousel", data-slide="prev") &lsaquo;
+      a.carousel-control.right(href="#myCarousel", data-slide="next") &rsaquo;
     p
+
+  script(src="/app/app.js")

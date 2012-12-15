@@ -19,8 +19,9 @@ app.use(express.static(__dirname + '/public'));
 app.use(express.static(__dirname + '/components'));
 
 app.get('/', site.index);
+app.get('/api', site.api);
 
-app.get('/api', api.ping);
+app.get('/api/ping', api.ping);
 
 app.get('/api/slides', api.slides.listAll);
 app.get('/api/slides/:id', api.slides.findById);
