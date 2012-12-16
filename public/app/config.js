@@ -9,10 +9,11 @@ require.config({
     components: "../../components",
 
     // Libraries
-    jquery: "../../components/jquery/jquery.min.js",
-    lodash: "../../components/lodash/lodash.min.js",
-    backbone: "../../components/backbone/backbone-min.js",
-    handlebars: "../../components/handlebars-1.0.0-rc.1.js"
+    jquery: "../../jquery/jquery.min",
+    lodash: "../../lodash/lodash.min",
+    backbone: "../../backbone/backbone-min",
+    handlebars: "../../handlebars/handlebars-1.0.0-rc.1",
+    layoutmanager: "../../layoutmanager/backbone.layoutmanager"
   },
 
   shim: {
@@ -28,7 +29,7 @@ require.config({
     },
 
     // Backbone.LayoutManager depends on Backbone.
-    "plugins/backbone.layoutmanager": ["backbone"]
+    layoutmanager: ["backbone"]
   }
 
 });
