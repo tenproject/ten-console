@@ -27,4 +27,9 @@ app.get('/api/slides', api.slides.listAll);
 app.get('/api/slides/:id', api.slides.findById);
 app.post('/api/slides', api.slides.create);
 
+// Catch unhandled errors
+process.on('uncaughtException', function(err) {
+  console.log(err);
+});
+
 app.listen(3000);
