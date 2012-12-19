@@ -1,10 +1,19 @@
 !!! 5
-html(lang="en")
+html(lang="en", ng-app="TEN")
   head
     title TEN Console
     block head
+      // CSS
       link(href="//netdna.bootstrapcdn.com/twitter-bootstrap/2.2.1/css/bootstrap.min.css", rel="stylesheet")
       link(href="/css/style.css", rel="stylesheet")
+
+      // JS
+      script(src="https://ajax.googleapis.com/ajax/libs/jquery/1.7.2/jquery.min.js")
+      script(src="//netdna.bootstrapcdn.com/twitter-bootstrap/2.2.1/js/bootstrap.min.js")
+      script(src="/angular/angular.js")
+      script(src="/js/app.js")
+      script(src="/js/controllers.js")
+
   body
     // Header
     .container
@@ -17,18 +26,10 @@ html(lang="en")
           h1 TEN
             small  Console
 
-
-
       // Content
       block content
 
     // Dependencies
     block scripts
-      script(src="https://ajax.googleapis.com/ajax/libs/jquery/1.7.2/jquery.min.js")
-      script(src="//netdna.bootstrapcdn.com/twitter-bootstrap/2.2.1/js/bootstrap.min.js")
-      script(src="/underscore/underscore.js")
-      script(src="/handlebars/handlebars-1.0.0-rc.1.js")
-      script(src="/backbone/backbone.js")
-      script(src="/layoutmanager/backbone.layoutmanager.js")
 
       // Appication Source
