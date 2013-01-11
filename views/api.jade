@@ -2,16 +2,15 @@ extends layout
 
 block content
   .row
-    .span2
-      div(style="position:fixed")
-        h5 Bookmarks
-        ul(class="nav nav-pills nav-stacked")
-          li: a(href="#general") General
-          li: a(href="#slides") Slides
-          li: a(href="#screens") Screens
-          li: a(href="#users") Users
+    .two.columns
+      h5 Bookmarks
+      ul.side-nav
+        li: a(href="#general") General
+        li: a(href="#slides") Slides
+        li: a(href="#screens") Screens
+        li: a(href="#users") Users
 
-    .span10
+    .ten.columns
       h1 API Documentation
       p
         | All RESTful API access is over HTTPS and accessed via&nbsp
@@ -21,7 +20,7 @@ block content
       // General
       p.lead
         a(name="general", href="#general") General
-      table(class="table table-hover table-striped")
+      table.twelve
         thead
           tr
             th URL
@@ -39,7 +38,7 @@ block content
       p.lead
         a(name="slides", href="#slides") Slides
       p Slide Content Management
-      table(class="table table-hover table-striped")
+      table.twelve
         thead
           tr
             th URL
@@ -65,7 +64,7 @@ block content
       p.lead
         a(name="screens", href="#screens") Screens
       p Retreieve data for Monitors
-      table(class="table table-hover table-striped")
+      table.twelve
         thead
           tr
             th URL
@@ -87,7 +86,7 @@ block content
       p.lead
         a(name="users", href="#users") Users
       p User Management
-      table(class="table table-hover table-striped")
+      table.twelve
         thead
           tr
             th URL

@@ -1,0 +1,13 @@
+extends layout
+
+
+block content
+  .row
+    .five.columns.centered
+      form(method="POST", action="/register")
+        fieldset
+          legend Register
+          input(type="text", name="username", placeholder="Username")
+          input(type="text", name="email", placeholder="Email Address")
+          input(type="password", name="password", placeholder="Password")
+          p: input.button.small(type="submit") Register

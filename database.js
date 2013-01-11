@@ -9,7 +9,15 @@ mongoose.connection.once('open', function callback () {
 });
 
 var slideSchema = mongoose.Schema({ name: 'string' });
+var userSchema = mongoose.Schema({ username: 'string', password: 'string', email: 'string' });
+
+userSchema.methods.validPassword = function (password) {
+  console.log(this);
+  console.log(password);
+  return true;
+};
 
 module.exports = {
-  Slide: mongoose.model('Slide', slideSchema)
+  Slide: mongoose.model('Slide', slideSchema),
+  User: mongoose.model('User', userSchema)
 };

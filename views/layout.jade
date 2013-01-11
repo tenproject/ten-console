@@ -3,32 +3,56 @@ html(lang="en")
   head
     title TEN Console
     block head
-      link(href="//netdna.bootstrapcdn.com/twitter-bootstrap/2.2.1/css/bootstrap.min.css", rel="stylesheet")
+
+      //- link(href="//netdna.bootstrapcdn.com/twitter-bootstrap/2.2.1/css/bootstrap.min.css", rel="stylesheet")
+      link(href="//cdnjs.cloudflare.com/ajax/libs/foundation/3.2.2/stylesheets/foundation.min.css", rel="stylesheet")
       link(href="/css/style.css", rel="stylesheet")
   body
-    // Header
-    .container
-      .pull-right(style="margin-top: 25px")
-        .ul.nav.nav-pills
-          li: a(href="/") Home
-          li: a(href="/api") API Documentation
-      .clearfix
-        .page-header
-          h1 TEN
-            small  Console
+    nav.top-bar
+      ul
+        li.name
+          h1
+            a(href='/') TEN Console
+      section
+        ul.left
+          li.divider
+            li
+              a(href='/api') API Documentation
+            li.divider
+        ul.right
+          - if (!user)
+            li.divider
+            li
+              a(href='/login') Login
+            li.divider
+            li
+              a(href='/register') Register
+          - else
+            li.divider
+            li.has-dropdown
+              a(href='#')
+                span= user.username
+              ul.dropdown
+                li
+                  label Settings
+                li
+                  a(href='#') Profile
+                li.divider
+                li
+                  a(href='/logout') Logout
+            li.divider
 
-
-
-      // Content
-      block content
+    // Content
+    block content
 
     // Dependencies
     block scripts
       script(src="https://ajax.googleapis.com/ajax/libs/jquery/1.7.2/jquery.min.js")
-      script(src="//netdna.bootstrapcdn.com/twitter-bootstrap/2.2.1/js/bootstrap.min.js")
-      script(src="/underscore/underscore.js")
-      script(src="/handlebars/handlebars-1.0.0-rc.1.js")
-      script(src="/backbone/backbone.js")
-      script(src="/layoutmanager/backbone.layoutmanager.js")
+      //- script(src="//netdna.bootstrapcdn.com/twitter-bootstrap/2.2.1/js/bootstrap.min.js")
+      script(src="//cdnjs.cloudflare.com/ajax/libs/foundation/3.2.2/javascripts/foundation.min.js")
+      //- script(src="/underscore/underscore.js")
+      //- script(src="/handlebars/handlebars-1.0.0-rc.1.js")
+      //- script(src="/backbone/backbone.js")
+      //- script(src="/layoutmanager/backbone.layoutmanager.js")
 
       // Appication Source
