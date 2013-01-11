@@ -1,0 +1,73 @@
+extends ../layout
+
+block content
+  .row
+    h4.subheader Slide Submission
+    form(action="/slides/create/", method="POST")
+      .eight.columns
+        .row
+          .three.mobile-one.columns
+            label.right.inline Slide Title:
+          .nine.mobile-three.columns
+            input.eight(type='text', name="title", placeholder='e.g. Meet Buddy Event')
+        .row
+          .three.mobile-one.columns
+            label.right.inline Slide Description:
+          .nine.mobile-three.columns
+            input.eight(type='text', name="description", placeholder='e.g. Engineering Study Buddy Program')
+        .row
+          .three.mobile-one.columns
+            label.right.inline Remarks:
+          .nine.mobile-three.columns
+            textarea(placeholder="e.g. Special requests or remarks goes here")
+        .row
+          .three.mobile-one.columns
+            label.right.inline Location:
+          .three.mobile-three.columns
+            label(for='checkbox1')
+              input(id="checkbox1", type='checkbox')
+              span.custom.checkbox
+              | Trottier
+            label(for='checkbox2')
+              input(id="checkbox2", type='checkbox')
+              span.custom.checkbox.checked
+              | FDA
+            label(for='checkbox3')
+              input(id="checkbox3", type='checkbox')
+              | McConnell
+          .three.mobile-three.columns
+            label(for='checkbox4')
+              input(id="checkbox4", type='checkbox')
+              span.custom.checkbox
+              | Rutherford
+            label(for='checkbox5')
+              input(id="checkbox5", type='checkbox')
+              span.custom.checkbox.checked
+              | Wong
+            label(for='checkbox6')
+              input(id="checkbox6", type='checkbox')
+              | Schulich
+          .three.mobile-three.columns
+            label(for='checkbox7')
+              input(id="checkbox7", type='checkbox')
+              span.custom.checkbox
+              | Leacock
+            label(for='checkbox8')
+              input(id="checkbox8", type='checkbox')
+              span.custom.checkbox.checked
+              | SSMU
+            label(for='checkbox9')
+              input(id="checkbox9", type='checkbox')
+              | Otto Mass
+        .row
+          .three.mobile-one.columns
+            label.right.inline Upload:
+          .nine.mobile-three.columns
+            input(type="file", name="file")
+            label Accepted formats: .jpg, .jpeg, .png
+        .row
+          br
+          br
+          input.button(type="submit") Submit
+
+

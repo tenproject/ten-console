@@ -8,11 +8,17 @@ mongoose.connection.once('open', function callback () {
   console.log("Mongoose Connection Open");
 });
 
-var slideSchema = mongoose.Schema({ name: 'string' });
-var userSchema = mongoose.Schema({ username: 'string', password: 'string', email: 'string' });
+var slideSchema = mongoose.Schema({
+  title: 'string',
+  description: 'string'
+});
+var userSchema = mongoose.Schema({
+  username: 'string',
+  password: 'string',
+  email: 'string'
+});
 
 userSchema.methods.validPassword = function (password) {
-  console.log(this);
   console.log(password);
   return true;
 };

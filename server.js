@@ -87,6 +87,23 @@ function ensureAuthenticated(req, res, next) {
   res.redirect('/login')
 }
 
+app.get('/slides/create', function(req, res) {
+  res.render('slides/create', { user: req.user });
+});
+
+app.post('/slides/create', function(req, res) {
+  // Create a new slide
+  var obj = {
+    title: req.param('title'),
+    description: req.param('description')
+  };
+
+  database.Slide.create(obj, function (err, small) {
+    if (err) return handleError(err);
+    res.redirect('/console');
+  });
+});
+
 // Site
 app.get('/', site.index);
 app.get('/api', site.api);
