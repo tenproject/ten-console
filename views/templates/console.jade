@@ -1,1 +1,9 @@
-p console
+h3 Welcome to the Console
+
+div(ng-controller='ConsoleCtrl')
+  span Your Name:
+  input(type='text', ng-model='username', placeholder="Enter Your Name")
+  button(ng-click='sayHello()', class="btn btn-primary") Submit
+  hr
+  {{greeting}}
+  {{username}}
