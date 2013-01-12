@@ -1,113 +1,56 @@
 var express = require('express'),
     site = require('./site'),
     api = require('./api'),
-    database = require('./database'),
+    database = require('./libs/database'),
     passport = require('passport'),
-    LocalStrategy = require('passport-local').Strategy;
+    LocalStrategy = require('passport-local').Strategy,
+    RedisStore = require('connect-redis')(express);
 
-var app = express();
+var app = express(),
+    pass = require('./libs/passport'),
+    login = require('./libs/login'),
+    slides = require('./libs/slides'),
+    mixin = require('./libs/mixin'),
+    viewHandler = require('./libs/view');
 
-var users = [
-  { id: 1, username: 'bob', password: 'secret', email: 'bob@example.com' },
-  { id: 2, username: 'joe', password: 'birthday', email: 'joe@example.com' }
-];
-
-passport.use(new LocalStrategy(
-  function(username, password, done) {
-    database.User.findOne({ username: username }, function (err, user) {
-      console.log(user);
-      if (err) { return done(err); }
-      if (!user) {
-        return done(null, false, { message: 'Incorrect username.' });
-      }
-      if (!user.validPassword(password)) {
-        return done(null, false, { message: 'Incorrect password.' });
-      }
-      return done(null, user);
-    });
-  }
-));
-
-passport.serializeUser(function(user, done) {
-  done(null, user.username);
-});
-
-passport.deserializeUser(function(username, done) {
-  database.User.findOne({ username: username }, function(err, user) {
-    console.log("logged in!");
-    done(err, user);
-  });
-});
-
+// Express Configuration
 app.set('port', 3000);
 app.set('view engine', 'jade');
 app.locals.pretty = true;
 
+// Express Static Content
+app.use(express.static(__dirname + '/public'));
+app.use(express.static(__dirname + '/components'));
+app.use(express.favicon());
+
+// Express Middleware Stack
 app.use(express.errorHandler());
 app.use(express.logger('dev'));
 app.use(express.cookieParser());
 app.use(express.compress());
 app.use(express.bodyParser());
 app.use(express.methodOverride());
-app.use(express.session({ secret: 'ten console secret password' }));
+app.use(express.session({
+  secret: 'ten console secret password',
+  store: new RedisStore({
+    host: 'lab.redistogo.com',
+    port: 9405,
+    username: 'redistogo',
+    pass: '1561497803dcb7bc34e3e3931267b091'
+  })
+}));
 app.use(passport.initialize());
 app.use(passport.session());
+app.use(viewHandler());
+app.use(pass);
+app.use(login);
+app.use(slides);
 app.use(app.router);
-
-app.use(express.static(__dirname + '/public'));
-app.use(express.static(__dirname + '/components'));
-
-// Passport
-app.get('/login', function(req, res) {
-  res.render('login', { user: req.user });
-});
-app.post('/login', passport.authenticate('local', { successRedirect: '/console', failureRedirect: '/login' }));
-app.get('/logout', function(req, res) {
-  req.logout();
-  res.redirect('/');
-});
-
-app.get('/register', function(req, res) {
-  res.render('register', { user: req.user });
-});
-
-app.post('/register', function(req, res) {
-  // Register a new user
-  var user = new database.User({ username: req.param('username'), password: req.param('password') });
-  user.save(function(err) {
-    if (err) {
-      console.log(err);
-    }
-    res.redirect('/');
-  });
-});
-
-function ensureAuthenticated(req, res, next) {
-  if (req.isAuthenticated()) { return next(); }
-  res.redirect('/login')
-}
-
-app.get('/slides/create', function(req, res) {
-  res.render('slides/create', { user: req.user });
-});
-
-app.post('/slides/create', function(req, res) {
-  // Create a new slide
-  var obj = {
-    title: req.param('title'),
-    description: req.param('description')
-  };
-
-  database.Slide.create(obj, function (err, small) {
-    if (err) return handleError(err);
-    res.redirect('/console');
-  });
-});
 
 // Site
 app.get('/', site.index);
 app.get('/api', site.api);
-app.get('/console', ensureAuthenticated, site.console);
+app.get('/console', mixin.ensureAuthenticated, site.console);
 
 // Api
 app.get('/api/ping', api.ping);

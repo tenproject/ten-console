@@ -1,4 +1,4 @@
-var database = require('./database');
+var database = require('./libs/database');
 
 exports.index = function(req, res) {
   res.render('index', { user: req.user });

@@ -1,6 +1,6 @@
 var _package = require('./package.json'),
     mongoose = require('mongoose'),
-    database = require('./database');
+    database = require('./libs/database');
 
 exports.ping = function(req, res) {
   res.json({version: _package.version, name: _package.name});

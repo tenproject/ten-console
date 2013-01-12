@@ -9,7 +9,7 @@ block content
       h5.sunheader Navigation
       ul.nav-bar.vertical
         li: a(href="/slides/create") Create Slide
-        li: a(href="/slides/create") List Slides
+        li: a(href="/slides") List Slides
         li: a(href="/location") List Location
 
     .nine.columns
@@ -17,12 +17,10 @@ block content
       table.twelve
         thead
           tr
-            th ID
             th Title
             th Description
         tbody
           each slide in slides
             tr
-              td= slide._id
               td= slide.title
               td= slide.description

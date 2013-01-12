@@ -10,8 +10,16 @@ mongoose.connection.once('open', function callback () {
 
 var slideSchema = mongoose.Schema({
   title: 'string',
-  description: 'string'
+  description: 'string',
+  remarks: 'string',
+  author: { type: mongoose.Schema.ObjectId, ref: 'User' },
+  location: { type: [] },
+  source_url: { type: 'string' },
+  status: { type: 'string', default: 'submitted' },
+  time_created: { type: Date, default: Date.now },
+  time_modified: { type: Date, default: Date.now }
 });
+
 var userSchema = mongoose.Schema({
   username: 'string',
   password: 'string',

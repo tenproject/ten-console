@@ -1,0 +1,35 @@
+extends ../../views/layout
+
+block content
+  .row
+    h5.sunheader List of Slides
+    table.twelve
+      thead
+        tr
+          th Author
+          th Title
+          th Description
+          th Remarks
+          th Source
+          th Location
+          th Submission Date
+          th Status
+      tbody
+        - if (slides.length)
+          each slide in slides
+            tr
+              td= slide.author
+              td: a(href="/slides/edit/#{slide._id}") #{slide.title}
+              td= slide.description
+              td= slide.remarks
+              td= slide.source_url
+              td
+                each location in slide.location
+                  span= location
+                  br
+              td= formatDate(slide.time_created, "%b %d, %Y at %I:%M %p")
+              td= slide.status
+        - else
+          tr
+            td
+              h4.subheader No Slides

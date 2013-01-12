@@ -10,7 +10,8 @@
     "jade": "~0.27",
     "mongoose": "~3",
     "passport": "~0.1.15",
-    "passport-local": "~0.1.6"
+    "passport-local": "~0.1.6",
+    "connect-redis": "~1.4.5"
   },
   "subdomain": "ten-console",
   "engines": {

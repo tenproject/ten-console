@@ -1,9 +1,9 @@
-extends ../layout
+extends ../../views/layout
 
 block content
   .row
-    h4.subheader Slide Submission
-    form(action="/slides/create/", method="POST")
+    h4.subheader Create a new Slide
+    form(action="/slides/create", method="POST")
       .eight.columns
         .row
           .three.mobile-one.columns
@@ -19,46 +19,50 @@ block content
           .three.mobile-one.columns
             label.right.inline Remarks:
           .nine.mobile-three.columns
-            textarea(placeholder="e.g. Special requests or remarks goes here")
+            textarea(type='text', name="remarks", placeholder="e.g. Special requests or remarks goes here", rows="4")
         .row
           .three.mobile-one.columns
             label.right.inline Location:
-          .three.mobile-three.columns
+          .nine.mobile-three.columns
             label(for='checkbox1')
-              input(id="checkbox1", type='checkbox')
+              input(name="location", type='checkbox', value="trottier")
               span.custom.checkbox
               | Trottier
             label(for='checkbox2')
-              input(id="checkbox2", type='checkbox')
+              input(name="location", type='checkbox', value="fda")
               span.custom.checkbox.checked
               | FDA
             label(for='checkbox3')
-              input(id="checkbox3", type='checkbox')
+              input(name="location", type='checkbox', value="mcconnell")
               | McConnell
-          .three.mobile-three.columns
             label(for='checkbox4')
-              input(id="checkbox4", type='checkbox')
+              input(name="location", type='checkbox', value="rutherford")
               span.custom.checkbox
               | Rutherford
             label(for='checkbox5')
-              input(id="checkbox5", type='checkbox')
+              input(name="location", type='checkbox', value="wong")
               span.custom.checkbox.checked
               | Wong
             label(for='checkbox6')
-              input(id="checkbox6", type='checkbox')
+              input(name="location", type='checkbox', value="schulich")
               | Schulich
-          .three.mobile-three.columns
             label(for='checkbox7')
-              input(id="checkbox7", type='checkbox')
+              input(name="location", type='checkbox', value="leacock")
               span.custom.checkbox
               | Leacock
             label(for='checkbox8')
-              input(id="checkbox8", type='checkbox')
+              input(name="location", type='checkbox', value="ssmu")
               span.custom.checkbox.checked
               | SSMU
             label(for='checkbox9')
-              input(id="checkbox9", type='checkbox')
+              input(name="location", type='checkbox', value="ottomass")
+              span.custom.checkbox.checked
               | Otto Mass
+        .row
+          .three.mobile-one.columns
+            label.right.inline Source URL:
+          .nine.mobile-three.columns
+            input.eight(type='text', name="source_url", placeholder='e.g. http://domain.com/image.jpg')
         .row
           .three.mobile-one.columns
             label.right.inline Upload:
