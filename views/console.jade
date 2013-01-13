@@ -6,21 +6,7 @@ block content
       h3.subheader Hello #{user.username}!
   .row
     .three.columns
-      h5.sunheader Navigation
       ul.nav-bar.vertical
         li: a(href="/slides/create") Create Slide
         li: a(href="/slides") List Slides
         li: a(href="/location") List Location
-
-    .nine.columns
-      h5.sunheader List of Slides
-      table.twelve
-        thead
-          tr
-            th Title
-            th Description
-        tbody
-          each slide in slides
-            tr
-              td= slide.title
-              td= slide.description

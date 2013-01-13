@@ -2,9 +2,9 @@ extends ../../views/layout
 
 block content
   .row
-    h4.subheader Create a new Slide
-    form(action="/slides/create", method="POST")
-      .eight.columns
+    .eight.columns
+      h4.subheader Create a new Slide
+      form(action="/slides/create", method="POST")
         .row
           .three.mobile-one.columns
             label.right.inline Slide Title:
@@ -73,5 +73,7 @@ block content
           br
           br
           input.button(type="submit") Submit
+          &nbsp;
+          a.button(value="Cancel", onclick='javascript:history.go(-1)') Cancel
 
 

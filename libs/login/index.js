@@ -1,13 +1,42 @@
-var express = require('express');
-var app = module.exports = express();
-
-var passport = require('passport'),
+var express = require('express'),
+    passport = require('passport'),
     LocalStrategy = require('passport-local').Strategy;
+
+var app = module.exports = express();
 
 app.set('views', __dirname);
 app.set('view engine', 'jade');
 
-// Login
+// Passport Configuraton
+passport.use(new LocalStrategy(
+  function(username, password, done) {
+    database.User.findOne({ username: username }, function (err, user) {
+      console.log(user);
+      if (err) { return done(err); }
+      if (!user) {
+        return done(null, false, { message: 'Incorrect username.' });
+      }
+      if (!user.validPassword(password)) {
+        return done(null, false, { message: 'Incorrect password.' });
+      }
+      return done(null, user);
+    });
+  }
+));
+
+passport.serializeUser(function(user, done) {
+  done(null, user); // serialize whole user object.
+});
+
+passport.deserializeUser(function(user, done) {
+  done(null, user);
+  // database.User.findOne({ username: username }, function(err, user) {
+  //   console.log("logged in!");
+  //   done(err, user);
+  // });
+});
+
+// Routes - Login
 app.get('/login', function(req, res) {
   res.render('login', { user: req.user });
 });
@@ -20,13 +49,12 @@ app.get('/logout', function(req, res) {
 });
 
 
-// Register
+// Routes - Register
 app.get('/register', function(req, res) {
   res.render('register', { user: req.user });
 });
 
 app.post('/register', function(req, res) {
-  // Register a new user
   var user = new database.User({ username: req.param('username'), password: req.param('password') });
   user.save(function(err) {
     if (err) {

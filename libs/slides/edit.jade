@@ -2,10 +2,10 @@ extends ../../views/layout
 
 block content
   .row
-    - if (slide)
-      h4.subheader Edit Slide - #{slide.title}
-      form(action="/slides/edit", method="POST")
-        .eight.columns
+    .eight.columns
+      - if (slide)
+        h4.subheader Edit Slide - #{slide.title}
+        form(action="/slides/edit", method="POST")
           .row
             .three.mobile-one.columns
               label.right.inline Slide Title:
@@ -84,5 +84,5 @@ block content
                   alert("Error: " + errorThrown);
                 });
               };
-    - else
-      h4.subheader Slide Not Found
+      - else
+        h4.subheader Slide Not Found

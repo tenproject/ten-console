@@ -1,10 +1,8 @@
-var express = require('express');
-var app = module.exports = express();
-
-var passport = require('passport'),
-    LocalStrategy = require('passport-local').Strategy,
+var express = require('express'),
     database = require('../database'),
     mixin = require('../mixin');
+
+var app = module.exports = express();
 
 // Views
 app.set('views', __dirname);
