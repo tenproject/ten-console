@@ -20,7 +20,10 @@ app.post('/slides/create', mixin.ensureAuthenticated, function(req, res) {
 
   slide.save(function(err, d) {
     if (err) {
-      //
+      console.log(err);
+      res.locals.msg = err;
+      res.locals.user = req.user;
+      res.render('create');
     } else {
       res.redirect('/console');
     }
@@ -49,6 +52,18 @@ app.get('/slides/edit/:slide', mixin.ensureAuthenticated, function(req, res) {
       if (err) return handleError(err);
       res.render('edit', { user: req.user, slide: doc});
     });
+});
+
+app.post('/slides/edit/:slide', mixin.ensureAuthenticated, function(req, res) {
+  database.Slide.findOneAndUpdate({ _id: req.params.slide }, req.body, function (err, doc) {
+    console.log(doc);
+    if (err) {
+      console.log(err);
+      res.render('edit', { user: req.user, slide: doc });
+    } else {
+      res.render('edit', { user: req.user, slide: doc });
+    }
+  });
 });
 
 app.delete('/slides/edit/:slide', mixin.ensureAuthenticated, function(req, res) {

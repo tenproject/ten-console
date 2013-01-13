@@ -9,7 +9,7 @@ mongoose.connection.once('open', function callback () {
 });
 
 var slideSchema = mongoose.Schema({
-  title: {type : String, default : '', trim : true},
+  title: {type : String, required: true, default : '', trim : true},
   description: {type : String, default : '', trim : true},
   remarks: {type : String, trim : true},
   user: { type: mongoose.Schema.ObjectId, ref: 'User' },
@@ -21,9 +21,10 @@ var slideSchema = mongoose.Schema({
 });
 
 var userSchema = mongoose.Schema({
-  username: {type : String, default : '', trim : true},
-  password: {type : String, default : '', trim : true},
-  email: {type : String, trim : true},
+  username: {type : String, required: true, trim : true},
+  password: {type : String, required: true, trim : true},
+  email: {type : String, required: true, trim : true},
+  organization: {type : String, trim : true},
   time_created: { type: Date, default: Date.now },
 });
 

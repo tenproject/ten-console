@@ -2,6 +2,10 @@ extends ../../views/layout
 
 block content
   .row
+    .twelve.columns
+      - if (typeof msg !== "undefined")
+        .alert-box.alert #{msg}
+  .row
     .eight.columns
       h4.subheader Create a new Slide
       form(action="/slides/create", method="POST")
@@ -62,7 +66,7 @@ block content
           .three.mobile-one.columns
             label.right.inline Source URL:
           .nine.mobile-three.columns
-            input.eight(type='text', name="source_url", placeholder='e.g. http://domain.com/image.jpg')
+            input.eight(type='text', name="source_url", placeholder='e.g. http://placehold.it/1920x1080', value="http://placehold.it/1920x1080")
         .row
           .three.mobile-one.columns
             label.right.inline Upload:
@@ -74,6 +78,6 @@ block content
           br
           input.button(type="submit") Submit
           &nbsp;
-          a.button(value="Cancel", onclick='javascript:history.go(-1)') Cancel
+          a.button(value="Cancel", href="/console") Cancel
 
 

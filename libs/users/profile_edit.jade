@@ -3,12 +3,18 @@ extends ../../views/layout
 block content
   .row
     .six.columns
+      - if (typeof msg !== "undefined")
+        .alert-box.success #{msg}
+  .row
+    .six.columns
       form(action="/users/me/edit", method="POST")
         h3.subheader View Profile
         h5.subheader ID:
         input(type="text", value="#{user.id}", disabled)
         h5.subheader Username:
         input(type="text", name="username", value="#{user.username}", disabled)
+        h5.subheader Email:
+        input(type="text", name="email", value="#{user.email}")
         h5.subheader Password:
         input(type="password", name="password", placeholder="New password")
         input(type="password", placeholder="Confirm password")

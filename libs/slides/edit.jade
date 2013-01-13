@@ -5,7 +5,7 @@ block content
     .eight.columns
       - if (slide)
         h4.subheader Edit Slide - #{slide.title}
-        form(action="/slides/edit", method="POST")
+        form(action="/slides/edit/#{slide._id}", method="POST")
           .row
             .three.mobile-one.columns
               label.right.inline Slide Title:
@@ -61,6 +61,11 @@ block content
                 | Otto Mass
           .row
             .three.mobile-one.columns
+              label.right.inline Source URL:
+            .nine.mobile-three.columns
+              input.eight(type='text', name="source_url", placeholder='e.g. http://placehold.it/1920x1080', value="#{slide.source_url}")
+          .row
+            .three.mobile-one.columns
               label.right.inline Upload:
             .nine.mobile-three.columns
               input(type="file", name="file")
@@ -69,7 +74,7 @@ block content
             br
             input.button(type="submit", value="Save Changes") Submit
             &nbsp;
-            a.button(value="Cancel", onclick='javascript:history.go(-1)') Cancel
+            a.button(value="Cancel", href="/slides") Cancel
             a.button.right(value="Delete Slide", onclick='var x = confirm("Confirm Deletion of #{slide.title}"); if (x) { window.delete(); }') Delete
 
             script

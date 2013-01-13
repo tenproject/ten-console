@@ -57,3 +57,7 @@ app.get('/console', mixin.ensureAuthenticated, function(req, res) {
 app.listen(app.get('port'), function () {
   console.log("Express server running on port " + app.get('port'));
 });
+
+process.on('uncaughtException', function(err) {
+  console.error(err.stack);
+});

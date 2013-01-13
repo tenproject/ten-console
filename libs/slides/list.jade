@@ -6,30 +6,50 @@ block content
     table.twelve
       thead
         tr
-          th Author
           th Title
           th Description
+          th Author
           th Source
           th Location
-          th Submission Date
           th Status
+          th Submission Date
       tbody
         - if (slides.length)
           for slide in slides
-            tr
+            tr(onclick="window.location.href = '/slides/edit/#{slide._id}'")
+              td= slide.title
+              td= slide.description
               td
                 if (slide.user)
                   a(href='/users/#{slide.user._id}') #{slide.user.username}
-              td: a(href="/slides/edit/#{slide._id}") #{slide.title}
-              td= slide.description
-              td= slide.source_url
+              td: a(href="#{slide.source_url}") #{slide.source_url}
               td
                 each location in slide.location
-                  span= location
+                  span= capitalize(location)
                   br
+              td= capitalize(slide.status)
               td= formatDate(slide.time_created)
-              td= slide.status
         - else
           tr
             td
               h4.subheader No Slides
+    dl
+      dt: strong Status Legend
+      dd
+        span.label Submitted
+        |  We have recieved your submission and will be reviewing it
+      dd
+        span.label Rejected
+        |  Submission did not meet requirements. Please read slide comments
+      dd
+        span.label.success Online
+        |  Slide is being displayed at designated locations
+      dd
+        span.label.alert Offline
+        |  Slide is not displayed on any monitors
+      dd
+        span.label.secondary Expired
+        |  Slide approved online duration has expired
+      dd
+        span.label.secondary Draft
+        |  Saved slides which have not yet been submitted for approval

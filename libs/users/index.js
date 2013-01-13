@@ -32,11 +32,19 @@ app.get('/users/me/edit', function (req, res) {
 });
 
 app.post('/users/me/edit', function (req, res) {
-  database.User.findOneAndUpdate(req.user._id, req.body, function (err, doc) {
+  var update = req.body;
+
+  // Prevent saving empty password
+  if (req.body.password == '') {
+    delete req.body.password
+  };
+
+  database.User.findOneAndUpdate(req.user._id, update, function (err, doc) {
     if (err) {
       // res.render('500');
     } else {
       res.locals.user = doc;
+      res.locals.msg = "Profile Updated!"
       res.render('profile_edit');
     }
   });

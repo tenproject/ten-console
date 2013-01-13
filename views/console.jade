@@ -3,7 +3,7 @@ extends layout
 block content
   .row
     .twelve.columns
-      h3.subheader Hello #{user.username}!
+      h3.subheader Hello #{capitalize(user.username)}!
   .row
     .three.columns
       ul.nav-bar.vertical

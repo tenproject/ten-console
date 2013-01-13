@@ -19,6 +19,9 @@ function stringify (obj) {
   return json;
 }
 
+function capitalize (string) {
+  return string.charAt(0).toUpperCase() + string.slice(1);;
+}
 
 module.exports = function () {
   return function (req, res, next) {
@@ -26,6 +29,7 @@ module.exports = function () {
     res.locals.formatDate = formatDate;
     res.locals.userObject = userObject;
     res.locals.stringify = stringify;
+    res.locals.capitalize = capitalize;
 
     // objects
     res.locals.currentUser = req.user;
