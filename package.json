@@ -1,6 +1,6 @@
 {
-  "name": "ten-console",
-  "version": "0.0.1-4",
+  "name": "ten",
+  "version": "0.0.1-7",
   "private": true,
   "scripts": {
     "start": "node server.js"
@@ -13,7 +13,7 @@
     "passport-local": "~0.1.6",
     "connect-redis": "~1.4.5"
   },
-  "subdomain": "ten-console",
+  "subdomain": "ten",
   "engines": {
     "node": "0.8.x"
   }
