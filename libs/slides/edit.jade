@@ -79,7 +79,7 @@ block content
                   url: "/slides/edit/#{slide._id}"
                 }).success(function( obj, status, xhr ) {
                   window.location.replace("/slides");
-                }).error(XMLHttpRequest, textStatus, errorThrown) {
+                }).error(function(XMLHttpRequest, textStatus, errorThrown) {
                   alert("Status: " + textStatus);
                   alert("Error: " + errorThrown);
                 });

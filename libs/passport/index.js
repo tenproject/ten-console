@@ -22,7 +22,7 @@ passport.use(new LocalStrategy(
 ));
 
 passport.serializeUser(function(user, done) {
-  done(null, user);
+  done(null, user); // serialize whole user object.
 });
 
 passport.deserializeUser(function(user, done) {

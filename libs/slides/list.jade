@@ -9,7 +9,6 @@ block content
           th Author
           th Title
           th Description
-          th Remarks
           th Source
           th Location
           th Submission Date
@@ -18,10 +17,9 @@ block content
         - if (slides.length)
           each slide in slides
             tr
-              td= slide.author
+              td= slide.user
               td: a(href="/slides/edit/#{slide._id}") #{slide.title}
               td= slide.description
-              td= slide.remarks
               td= slide.source_url
               td
                 each location in slide.location

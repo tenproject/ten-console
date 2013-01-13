@@ -1,16 +1,16 @@
 var express = require('express'),
     site = require('./site'),
-    api = require('./api'),
-    database = require('./libs/database'),
     passport = require('passport'),
     LocalStrategy = require('passport-local').Strategy,
     RedisStore = require('connect-redis')(express);
 
-var app = express(),
-    pass = require('./libs/passport'),
-    login = require('./libs/login'),
-    slides = require('./libs/slides'),
-    mixin = require('./libs/mixin'),
+var app         = express(),
+    api         = require('./libs/api'),
+    database    = require('./libs/database'),
+    pass        = require('./libs/passport'),
+    login       = require('./libs/login'),
+    slides      = require('./libs/slides'),
+    mixin       = require('./libs/mixin'),
     viewHandler = require('./libs/view');
 
 // Express Configuration
@@ -44,20 +44,14 @@ app.use(passport.session());
 app.use(viewHandler());
 app.use(pass);
 app.use(login);
+app.use(api);
 app.use(slides);
 app.use(app.router);
 
 // Site
 app.get('/', site.index);
-app.get('/api', site.api);
 app.get('/console', mixin.ensureAuthenticated, site.console);
 
-// Api
-app.get('/api/ping', api.ping);
-
-app.get('/api/slides', api.slides.listAll);
-app.get('/api/slides/:id', api.slides.findById);
-app.post('/api/slides', api.slides.create);
 
 app.listen(app.get('port'), function () {
   console.log("Express server running on port " + app.get('port'));

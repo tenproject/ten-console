@@ -16,22 +16,32 @@ app.get('/slides/create', mixin.ensureAuthenticated, function(req, res) {
 });
 
 app.post('/slides/create', mixin.ensureAuthenticated, function(req, res) {
-  console.log(req.body);
+  var slide = new database.Slide(req.body);
+
+  slide.user = req.user;
+
+  slide.save(function(err, d) {
+    if (err) {
+      //
+    } else {
+      res.redirect('/console');
+    }
+  });
 
   // Create a new slide
-  var obj = {
-    title: req.param('title'),
-    description: req.param('description'),
-    remarks: req.param('remarks'),
-    source_url: req.param('source_url'),
-    location: req.param('location'),
-    author: req.user._id
-  };
+  // var obj = {
+  //   title: req.param('title'),
+  //   description: req.param('description'),
+  //   remarks: req.param('remarks'),
+  //   source_url: req.param('source_url'),
+  //   location: req.param('location'),
+  //   user: req.user
+  // };
 
-  database.Slide.create(obj, function (err, small) {
-    if (err) return handleError(err);
-    res.redirect('/console');
-  });
+  // database.Slide.create(obj, function (err, small) {
+  //   if (err) return handleError(err);
+  //   res.redirect('/console');
+  // });
 });
 
 app.get('/slides/edit/:slide', mixin.ensureAuthenticated, function(req, res) {
@@ -56,10 +66,10 @@ app.delete('/slides/edit/:slide', mixin.ensureAuthenticated, function(req, res) 
 
 
 app.get('/slides', mixin.ensureAuthenticated, function(req, res) {
-  console.log(res.locals.formatDate);
-  database.Slide.find()
+  database.Slide.find({})
     .limit(25)
-    .sort('field -_id')
+    .populate('user', 'username') // gets username & _id only
+    .sort('field -_id') // sort by ID chronological
     .exec(function (err, slides) {
       res.render('list', { user: req.user, slides: slides});
     });

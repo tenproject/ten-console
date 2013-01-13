@@ -9,21 +9,21 @@ mongoose.connection.once('open', function callback () {
 });
 
 var slideSchema = mongoose.Schema({
-  title: 'string',
-  description: 'string',
-  remarks: 'string',
-  author: { type: mongoose.Schema.ObjectId, ref: 'User' },
+  title: {type : String, default : '', trim : true},
+  description: {type : String, default : '', trim : true},
+  remarks: {type : String, default : '', trim : true},
+  user: { type: mongoose.Schema.ObjectId, ref: 'User' },
   location: { type: [] },
-  source_url: { type: 'string' },
-  status: { type: 'string', default: 'submitted' },
+  source_url: { type: String },
+  status: { type: String, default: 'submitted' },
   time_created: { type: Date, default: Date.now },
   time_modified: { type: Date, default: Date.now }
 });
 
 var userSchema = mongoose.Schema({
-  username: 'string',
-  password: 'string',
-  email: 'string'
+  username: String,
+  password: String,
+  email: String
 });
 
 userSchema.methods.validPassword = function (password) {
