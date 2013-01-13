@@ -18,12 +18,14 @@ html(lang="en")
               a(href='/') TEN Console
             - else
               a(href='/console') TEN Console
+        li.toggle-topbar
+          a(href="#")
       section
         ul.left
           li.divider
-            li
-              a(href='/api') API Documentation
-            li.divider
+          li
+            a(href='/api') API Documentation
+          li.divider
         ul.right
           - if (!user)
             li.divider
@@ -41,7 +43,8 @@ html(lang="en")
                 li
                   label Settings
                 li
-                  a(href='#') Edit Your Profile
+                  a(href='/users/me') View Your Profile
+                  a(href='/users/me/edit') Edit Your Profile
                 li.divider
                 li
                   a(href='/logout') Logout

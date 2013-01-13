@@ -16,7 +16,7 @@ app.get('/slides/create', mixin.ensureAuthenticated, function(req, res) {
 app.post('/slides/create', mixin.ensureAuthenticated, function(req, res) {
   var slide = new database.Slide(req.body);
 
-  slide.user = req.user;
+  slide.user = req.user._id;
 
   slide.save(function(err, d) {
     if (err) {
@@ -66,9 +66,11 @@ app.delete('/slides/edit/:slide', mixin.ensureAuthenticated, function(req, res) 
 app.get('/slides', mixin.ensureAuthenticated, function(req, res) {
   database.Slide.find({})
     .limit(25)
-    .populate('user', 'username') // gets username & _id only
+    .populate('user', 'username') // populates username & _id only
     .sort('field -_id') // sort by ID chronological
     .exec(function (err, slides) {
-      res.render('list', { user: req.user, slides: slides});
+      res.locals.user = req.user;
+      res.locals.slides = slides;
+      res.render('list');
     });
 });

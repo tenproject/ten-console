@@ -15,9 +15,11 @@ block content
           th Status
       tbody
         - if (slides.length)
-          each slide in slides
+          for slide in slides
             tr
-              td= slide.user
+              td
+                if (slide.user)
+                  a(href='/users/#{slide.user._id}') #{slide.user.username}
               td: a(href="/slides/edit/#{slide._id}") #{slide.title}
               td= slide.description
               td= slide.source_url
@@ -25,7 +27,7 @@ block content
                 each location in slide.location
                   span= location
                   br
-              td= formatDate(slide.time_created, "%b %d, %Y at %I:%M %p")
+              td= formatDate(slide.time_created)
               td= slide.status
         - else
           tr

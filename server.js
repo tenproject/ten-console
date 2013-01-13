@@ -7,6 +7,7 @@ var app         = express(),
     database    = require('./libs/database'),
     api         = require('./libs/api'),
     login       = require('./libs/login'),
+    users       = require('./libs/users'),
     slides      = require('./libs/slides'),
     mixin       = require('./libs/mixin'),
     viewHandler = require('./libs/view');
@@ -40,6 +41,7 @@ app.use(passport.session());
 app.use(viewHandler());
 app.use(login);
 app.use(api);
+app.use(users);
 app.use(slides);
 app.use(app.router);
 app.use(express.compress());

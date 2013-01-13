@@ -1,6 +1,7 @@
 var express = require('express'),
     passport = require('passport'),
-    LocalStrategy = require('passport-local').Strategy;
+    LocalStrategy = require('passport-local').Strategy,
+    database = require('../database');
 
 var app = module.exports = express();
 
@@ -29,11 +30,9 @@ passport.serializeUser(function(user, done) {
 });
 
 passport.deserializeUser(function(user, done) {
-  done(null, user);
-  // database.User.findOne({ username: username }, function(err, user) {
-  //   console.log("logged in!");
-  //   done(err, user);
-  // });
+  database.User.findById(user._id, function(err, user) {
+    done(err, user);
+  });
 });
 
 // Routes - Login
