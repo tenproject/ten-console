@@ -4,7 +4,7 @@ block content
   .row
     .eight.columns
       - if (slide)
-        h4.subheader Edit Slide - #{slide.title}
+        h3.subheader Edit Slide - #{slide.title}
         form(action="/slides/edit/#{slide._id}", method="POST")
           .row
             .three.mobile-one.columns

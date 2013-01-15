@@ -2,7 +2,7 @@ extends ../../views/layout
 
 block content
   .row
-    h3.subheader List of Slides
+    h3.subheader Locations
     table.twelve
       thead
         tr
@@ -14,7 +14,7 @@ block content
           th Status
           th Submission Date
       tbody
-        - if (slides && slides.length)
+        - if (typeof slides == "object")
           for slide in slides
             tr(onclick="window.location.href = '/slides/edit/#{slide._id}'")
               td= slide.title
@@ -33,23 +33,3 @@ block content
           tr
             td
               h4.subheader No Slides
-    dl
-      dt: strong Status Legend
-      dd
-        span.label Submitted
-        |  We have recieved your submission and will be reviewing it
-      dd
-        span.label Rejected
-        |  Submission did not meet requirements. Please read slide comments
-      dd
-        span.label.success Online
-        |  Slide is being displayed at designated locations
-      dd
-        span.label.alert Offline
-        |  Slide is not displayed on any monitors
-      dd
-        span.label.secondary Expired
-        |  Slide approved online duration has expired
-      dd
-        span.label.secondary Draft
-        |  Saved slides which have not yet been submitted for approval

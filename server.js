@@ -9,6 +9,7 @@ var app         = express(),
     login       = require('./libs/login'),
     users       = require('./libs/users'),
     slides      = require('./libs/slides'),
+    locations   = require('./libs/locations'),
     mixin       = require('./libs/mixin'),
     viewHandler = require('./libs/view');
 
@@ -43,6 +44,7 @@ app.use(login);
 app.use(api);
 app.use(users);
 app.use(slides);
+app.use(locations);
 app.use(app.router);
 app.use(express.compress());
 

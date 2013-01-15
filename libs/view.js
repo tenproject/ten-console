@@ -32,7 +32,7 @@ module.exports = function () {
     res.locals.capitalize = capitalize;
 
     // objects
-    res.locals.currentUser = req.user;
+    res.locals.user = req.user;
 
     next();
   }
