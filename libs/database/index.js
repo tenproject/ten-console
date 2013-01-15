@@ -22,6 +22,8 @@ var slideSchema = mongoose.Schema({
 
 var userSchema = mongoose.Schema({
   username: {type : String, required: true, trim : true},
+  firstname: {type : String, default : '', trim : true},
+  lastname: {type : String, default : '', trim : true},
   password: {type : String, required: true, trim : true},
   email: {type : String, required: true, trim : true},
   organization: {type : String, trim : true},
