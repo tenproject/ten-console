@@ -19,7 +19,7 @@ app.set('view engine', 'jade');
 app.locals.pretty = true;
 
 // Express Static Content
-app.use(express.static(__dirname + '/public'));
+app.use(express.static(__dirname + '/public', { maxAge: 3600000 }));
 app.use(express.favicon());
 
 // Express Middleware Stack
