@@ -54,7 +54,7 @@ app.get('/register', function(req, res) {
 });
 
 app.post('/register', function(req, res) {
-  var user = new database.User({ username: req.param('username'), password: req.param('password') });
+  var user = new database.User({ username: req.param('username'), email: req.param('email'), firstname: req.param('firstname'), lastname: req.param('lastname'), password: req.param('password') });
   user.save(function(err) {
     if (err) {
       console.log(err);
