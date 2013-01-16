@@ -8,6 +8,7 @@ block content
   .row
     .six.columns
       form(action="/users/me/edit", method="POST")
+        input(type='hidden', name='_csrf', value='#{csrftoken}')
         h3.subheader View Profile
         h5.subheader ID:
         input(type="text", value="#{user.id}", disabled)

@@ -30,6 +30,7 @@ app.use(express.bodyParser());
 app.use(express.methodOverride());
 app.use(express.session({
   secret: 'ten console secret password',
+  // cookie: { httpOnly: true, secure: false },
   store: new RedisStore({
     host: 'lab.redistogo.com',
     port: 9405,
@@ -39,6 +40,11 @@ app.use(express.session({
 }));
 app.use(passport.initialize());
 app.use(passport.session());
+app.use(express.csrf());
+app.use(function (req, res, next) {
+  res.locals.csrftoken = req.session._csrf;
+  next();
+});
 app.use(viewHandler());
 app.use(login);
 app.use(api);

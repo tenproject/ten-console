@@ -6,6 +6,7 @@ block content
       - if (slide)
         h3.subheader Edit Slide - #{slide.title}
         form(action="/slides/edit/#{slide._id}", method="POST")
+          input(type='hidden', name='_csrf', value='#{csrftoken}')
           .row
             .three.mobile-one.columns
               label.right.inline Slide Title:
@@ -81,7 +82,10 @@ block content
               window.delete = function() {
                 $.ajax({
                   type: "DELETE",
-                  url: "/slides/edit/#{slide._id}"
+                  url: "/slides/edit/#{slide._id}",
+                  beforeSend: function (request) {
+                      request.setRequestHeader('X-CSRF-Token', '#{csrftoken}');
+                  },
                 }).success(function( obj, status, xhr ) {
                   window.location.replace("/slides");
                 }).error(function(XMLHttpRequest, textStatus, errorThrown) {

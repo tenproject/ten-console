@@ -9,6 +9,7 @@ block content
     .eight.columns
       h3.subheader Create a new Slide
       form(action="/slides/create", method="POST")
+        input(type='hidden', name='_csrf', value='#{csrftoken}')
         .row
           .three.mobile-one.columns
             label.right.inline Slide Title:
