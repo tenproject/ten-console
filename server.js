@@ -45,6 +45,30 @@ app.use(function (req, res, next) {
   res.locals.csrftoken = req.session._csrf;
   next();
 });
+
+// expose the "messages" local variable when views are rendered
+// app.use(function(req, res, next){
+//   var msgs = req.session.messages || [];
+
+//   // expose "messages" local variable
+//   res.locals.messages = msgs;
+
+//   // expose "hasMessages"
+//   res.locals.hasMessages = !! msgs.length;
+
+//   /* This is equivalent:
+//    res.locals({
+//      messages: msgs,
+//      hasMessages: !! msgs.length
+//    });
+//   */
+
+//   // empty or "flush" the messages so they
+//   // don't build up
+//   req.session.messages = [];
+//   next();
+// });
+
 app.use(viewHandler());
 app.use(login);
 app.use(api);
