@@ -23,7 +23,7 @@ app.use(express.static(__dirname + '/public'));
 app.use(express.favicon());
 
 // Express Middleware Stack
-app.use(express.errorHandler());
+app.use(express.errorHandler({ dumpExceptions: true, showStack: true }));
 app.use(express.logger('dev'));
 app.use(express.cookieParser());
 app.use(express.bodyParser());
