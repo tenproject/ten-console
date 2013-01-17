@@ -37,6 +37,12 @@ process.on('uncaughtException', function(err) {
   console.error(err.stack);
 });
 
+// parse request body
+app.use(express.bodyParser());
+
+// support _method (e.g. PUT in forms)
+app.use(express.methodOverride());
+
 // session support
 app.use(express.cookieParser());
 app.use(express.session({
@@ -60,12 +66,6 @@ app.use(function (req, res, next) {
   res.locals.csrftoken = req.session._csrf;
   next();
 });
-
-// parse request body
-app.use(express.bodyParser());
-
-// support _method (e.g. PUT in forms)
-app.use(express.methodOverride());
 
 // expose the "messages" local variable when views are rendered
 // app.use(function(req, res, next){

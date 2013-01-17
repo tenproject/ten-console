@@ -1,5 +1,22 @@
 extends ../../views/layout
 
+block append head
+  script
+    window.delete = function() {
+      $.ajax({
+        type: "DELETE",
+        url: "/slides/edit/#{slide._id}",
+        beforeSend: function (request) {
+            request.setRequestHeader('X-CSRF-Token', '#{csrftoken}');
+        },
+      }).success(function( obj, status, xhr ) {
+        window.location.replace("/slides");
+      }).error(function(XMLHttpRequest, textStatus, errorThrown) {
+        alert("Status: " + textStatus);
+        alert("Error: " + errorThrown);
+      });
+    };
+
 block content
   .row
     .eight.columns
@@ -77,21 +94,5 @@ block content
             &nbsp;
             a.button(value="Cancel", href="/slides") Cancel
             a.button.right(value="Delete Slide", onclick='var x = confirm("Confirm Deletion of #{slide.title}"); if (x) { window.delete(); }') Delete
-
-            script
-              window.delete = function() {
-                $.ajax({
-                  type: "DELETE",
-                  url: "/slides/edit/#{slide._id}",
-                  beforeSend: function (request) {
-                      request.setRequestHeader('X-CSRF-Token', '#{csrftoken}');
-                  },
-                }).success(function( obj, status, xhr ) {
-                  window.location.replace("/slides");
-                }).error(function(XMLHttpRequest, textStatus, errorThrown) {
-                  alert("Status: " + textStatus);
-                  alert("Error: " + errorThrown);
-                });
-              };
       - else
         h4.subheader Slide Not Found

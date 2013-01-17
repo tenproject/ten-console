@@ -6,30 +6,21 @@ block content
     table.twelve
       thead
         tr
-          th Title
-          th Description
+          th Name
+          th Building
           th Author
-          th Source
-          th Location
           th Status
-          th Submission Date
       tbody
-        - if (typeof slides == "object")
-          for slide in slides
-            tr(onclick="window.location.href = '/slides/edit/#{slide._id}'")
-              td= slide.title
-              td= slide.description
+        - if (typeof locations == "object")
+          for location in locations
+            tr(onclick="window.location.href = '/locations/edit/#{location._id}'")
+              td= location.name
+              td= location.building
               td
-                if (slide.user)
-                  a(href='/users/#{slide.user._id}') #{slide.user.username}
-              td: a(href="#{slide.source_url}") #{slide.source_url}
-              td
-                each location in slide.location
-                  span= capitalize(location)
-                  br
-              td= capitalize(slide.status)
-              td= formatDate(slide.time_created)
+                if (location.user)
+                  a(href='/users/#{location.user._id}') #{location.user.username}
+              td: a(href="#{location.status}") #{location.status}
         - else
           tr
             td
-              h4.subheader No Slides
+              h4.subheader No Locations

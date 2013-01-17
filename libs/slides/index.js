@@ -18,11 +18,10 @@ app.post('/slides/create', mixin.ensureAuthenticated, function(req, res) {
 
   slide.user = req.user._id;
 
-  slide.save(function(err, d) {
+  slide.save(function (err, d) {
     if (err) {
       console.log(err);
       res.locals.msg = err;
-      res.locals.user = req.user;
       res.render('create');
     } else {
       res.redirect('/console');
