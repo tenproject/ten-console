@@ -15,7 +15,7 @@ var slideSchema = mongoose.Schema({
   user: { type: mongoose.Schema.ObjectId, ref: 'User' },
   location: { type: [] },
   source_url: { type: String, trim : true },
-  status: { type: String, default: 'submitted' },
+  status: { type: String, default: 'submitted', enum: ['submitted', 'rejected', 'success', 'alert', 'expired', 'online', 'offline', 'draft'] },
   time_created: { type: Date, default: Date.now },
   time_modified: { type: Date, default: Date.now }
 });
@@ -35,7 +35,7 @@ var locationSchema = mongoose.Schema({
   building: { type: String, required: true, trim: true },
   user: { type: mongoose.Schema.ObjectId, ref: 'User' },
   remarks: { type: String },
-  status: { type: String }
+  status: { type: String, enum: ['online', 'offline', 'warning'] }
 });
 
 userSchema.methods.validPassword = function (password) {
