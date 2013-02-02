@@ -3,105 +3,48 @@ extends ../../views/layout
 block content
   .row
     .two.columns
-      h5 Bookmarks
       ul.side-nav
-        li: a(href="#general") General
-        li: a(href="#slides") Slides
-        li: a(href="#screens") Screens
-        li: a(href="#users") Users
+        caption: h5.subheader REST API
+        //-
+          li: a(href="#general") General
+          li: a(href="#location") Locations
+          li: a(href="#slides") Slides
+          li: a(href="#users") Users
 
     .ten.columns
-      h1 API Documentation
+      h1.subheader API Documentation
       p
         | All RESTful API access is over HTTPS and accessed via&nbsp
-        a(href="https://ten.jit.su.com/") https://ten-console.jit.su.com/
-        |  domain.
+        a(href="https://ten.jit.su.com/") https://ten.jit.su.com/api
 
-      // General
-      p.lead
-        a(name="general", href="#general") General
-      table.twelve
-        thead
-          tr
-            th URL
-            th HTTP METHOD
-            th FUNCTIONALITY
-        tbody
-          tr
-            td /api/ping
-            td GET
-            td Return API info
+      h2.subheader Github Docs:
+      h3.subheader
+        a(href="http://github.com/tenproject/ten-api-docs") github.com/tenproject/ten-api-docs
 
-      hr
 
-      // Slides
-      p.lead
-        a(name="slides", href="#slides") Slides
-      p Slide Content Management
-      table.twelve
-        thead
-          tr
-            th URL
-            th HTTP METHOD
-            th FUNCTIONALITY
-        tbody
-          tr
-            td /api/slides
-            td GET
-            td List of all slides
-          tr
-            td /api/slides/:id
-            td GET
-            td Get slide by ID
-          tr
-            td /api/slides
-            td POST
-            td Create a slide
+      h2.subheader Implemented Routes:
 
-      hr
+      h4.subheader GET
+      ul
+        for route in routes.get
+          li: a(href="#{route.path}") #{route.path}
 
-      // Screens
-      p.lead
-        a(name="screens", href="#screens") Screens
-      p Retreieve data for Monitors
-      table.twelve
-        thead
-          tr
-            th URL
-            th HTTP METHOD
-            th FUNCTIONALITY
-        tbody
-          tr
-            td /api/screens
-            td GET
-            td List of all screens
-          tr
-            td /api/screens/:id
-            td GET
-            td Retreieve screen by id
 
-      hr
+      if routes.post
+        h4.subheader POST
+        ul
+          for route in routes.post
+            li: a(href="#{route.path}") #{route.path}
 
-      // Users
-      p.lead
-        a(name="users", href="#users") Users
-      p User Management
-      table.twelve
-        thead
-          tr
-            th URL
-            th HTTP METHOD
-            th FUNCTIONALITY
-        tbody
-          tr
-            td /api/users
-            td GET
-            td Retreieve all users in database
-          tr
-            td /api/users/:id
-            td GET
-            td Retreieve user by id
-          tr
-            td /api/users
-            td POST
-            td Create a new slide
+      if routes.put
+        h4.subheader PUT
+        ul
+          for route in routes.put
+            li: a(href="#{route.path}") #{route.path}
+
+      if routes.delete
+        h4.subheader DELETE
+        ul
+          for route in routes.delete
+            li: a(href="#{route.path}") #{route.path}
+

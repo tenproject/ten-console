@@ -2,44 +2,31 @@ var express = require('express');
 var app = module.exports = express();
 
 var mongoose = require('mongoose'),
-    _package = require('../../package.json'),
     database = require('../database');
+
+// APIs
+var general = require('./general'),
+    locations = require('./locations'),
+    slides = require('./slides'),
+    users = require('./users');
 
 app.set('views', __dirname);
 app.set('view engine', 'jade');
 
 // Route
 app.get('/api', api = function(req, res) {
-  res.render('api', { user: req.user });
+  res.render('api', { user: req.user, routes: app.routes });
 });
 
-// Api
-app.get('/api/ping', function(req, res) {
-  res.json({version: _package.version, name: _package.name});
-});
+// REST API
+// General
+app.get('/api/ping', general.ping);
 
-app.get('/api/slides', function(req, res) {
-  database.Slide.find({}, function (err, obj) {
-    if (err) return handleError(err);
-    res.json(obj);
-  });
-});
 
-app.get('/api/slides/:id', function(req, res) {
-  var id = req.params.id;
+// Locations
 
-  database.Slide.findOne({ name: id }, function (err, obj) {
-    if (err) return handleError(err);
-    res.json(obj);
-  });
-});
-
-app.post('/api/slides', function(req, res) {
-  console.log(req.params);
-
-  var slide = new database.Slide({ name: req.params.name || "hello" });
-  slide.save(function (err, obj) {
-    if (err) {}
-    res.json(obj);
-  });
-});
+// Slides
+app.post('/api/slides', slides.create);
+app.get('/api/slides/:id', slides.retrieve);
+app.get('/api/slides', slides.list);
+app.delete('/api/slides', slides.delete)

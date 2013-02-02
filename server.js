@@ -14,13 +14,13 @@ var app         = express(),
     viewHandler = require('./libs/view');
 
 // Express Configuration
-app.set('port', 3000);
+app.set('port', process.argv[2] || 3000);
 app.set('view engine', 'jade');
-app.locals.pretty = true;
-
+// app.locals.pretty = true;
 
 // Express Middleware Stack
-// log
+
+// logger
 app.use(express.logger('dev'));
 
 // compress response data with gzip/deflate
@@ -103,7 +103,7 @@ app.use(locations);
 // route middleware
 app.use(app.router);
 
-app.get('/', function(req, res) {
+app.get('/', function (req, res) {
   res.render('index', { user: req.user });
 });
 

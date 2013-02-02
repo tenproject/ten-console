@@ -1,4 +1,8 @@
 function formatDate (date) {
+  if (typeof(date) == "string") {
+    date = new Date(date);
+  }
+
   var monthNames = [ "Jan", "Feb", "Mar", "Apr", "May", "June", "July", "Aug", "Sep", "Oct", "Nov", "Dec" ];
   return monthNames[date.getMonth()] + ' ' + date.getDate() + ', ' + date.getFullYear();
 }
