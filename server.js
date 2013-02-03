@@ -16,7 +16,15 @@ var app         = express(),
 // Express Configuration
 app.set('port', process.argv[2] || 3000);
 app.set('view engine', 'jade');
-// app.locals.pretty = true;
+app.locals.pretty = true;
+
+app.configure('development', function(){
+  app.set('api server', 'http://localhost:3001/');
+})
+
+app.configure('production', function(){
+  app.set('api server', 'https://ten-api.jit.su/');
+})
 
 // Express Middleware Stack
 
@@ -67,29 +75,6 @@ app.use(function (req, res, next) {
   next();
 });
 
-// expose the "messages" local variable when views are rendered
-// app.use(function(req, res, next){
-//   var msgs = req.session.messages || [];
-
-//   // expose "messages" local variable
-//   res.locals.messages = msgs;
-
-//   // expose "hasMessages"
-//   res.locals.hasMessages = !! msgs.length;
-
-//   /* This is equivalent:
-//    res.locals({
-//      messages: msgs,
-//      hasMessages: !! msgs.length
-//    });
-//   */
-
-//   // empty or "flush" the messages so they
-//   // don't build up
-//   req.session.messages = [];
-//   next();
-// });
-
 // expose template view handlers
 app.use(viewHandler());
 
@@ -104,11 +89,11 @@ app.use(locations);
 app.use(app.router);
 
 app.get('/', function (req, res) {
-  res.render('index', { user: req.user });
+  res.render('index');
 });
 
 app.get('/console', mixin.ensureAuthenticated, function(req, res) {
-  res.render('console', { user: req.user });
+  res.render('console');
 });
 
 // start listen on port 3000
