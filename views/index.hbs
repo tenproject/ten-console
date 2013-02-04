@@ -1,0 +1,30 @@
+<p>
+{{#if user}}
+  <h2 class="subheader">Hello {{user.username}},</h2>
+  <a href="/logout">logout</a><br/>
+
+  <p>
+     <h4 class="subheader">Your profiles</h4>
+    <a href="/user/{{user.username}}">/user/{{user.username}}</a><br/>
+  </p>
+
+  <p>
+    <h4 class="subheader">Oganizations</h4>
+    {{#each organizations}}
+    <li><a href="/{{this.id}}">{{this.name}}</a></li>
+    {{/each}}
+  </p>
+
+  <p>
+    <h4 class="subheader">Locations</h4>
+    {{#each locations}}
+      {{#each this}}
+      <li><a href="/{{this.id}}">{{this.id}}</a></li>
+      {{/each}}
+    {{/each}}
+  </p>
+{{else}}
+  <h2 class="subheader">Hello World,</h2>
+  <a href="/login">login</a>
+{{/if}}
+</p>

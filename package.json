@@ -1,21 +1,16 @@
 {
-  "name": "ten",
-  "version": "0.0.1-9",
+  "name": "application-name",
+  "version": "0.0.1",
   "private": true,
   "scripts": {
-    "start": "node server.js"
+    "start": "node app"
   },
   "dependencies": {
     "express": "~3",
-    "jade": "~0.27",
-    "mongoose": "~3",
-    "passport": "~0.1.15",
+    "hbs": "~2",
     "passport-local": "~0.1.6",
-    "connect-redis": "~1.4.5",
-    "request": "~2.12.0"
-  },
-  "subdomain": "ten",
-  "engines": {
-    "node": "0.8.x"
+    "passport": "~0.1.15",
+    "request": "~2.12.0",
+    "connect-redis": "~1.4.5"
   }
 }

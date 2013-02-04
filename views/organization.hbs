@@ -1,0 +1,16 @@
+<h2 class="subheader">{{organization.name}}</h2>
+<h3 class="subheader">Organization info</h3>
+{{#properties organization}}{{/properties}}
+
+<h3 class="subheader">Locations</h3>
+{{#each locations}}
+  <li><a href="/{{this.id}}">{{this.id}}</a></li>
+{{/each}}
+
+<h3 class="subheader">Slides</h3>
+{{#unless slides}}
+No slides for {{organization.name}}
+{{/unless}}
+{{#each slides}}
+  <li><a href="/{{this.organization}}/slides/{{this._id}}">{{this.title}}</a></li>
+{{/each}}
