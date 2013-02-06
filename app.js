@@ -15,6 +15,7 @@ app.configure(function() {
   app.set('views', __dirname + '/views');
   app.set('view engine', 'hbs');
   app.use(express.static(__dirname + '/public'), { maxAge: 300000 });
+  app.use(express.favicon());
   app.use(express.logger('dev'));
   app.use(express.cookieParser());
   app.use(express.bodyParser());
@@ -52,8 +53,13 @@ app.configure('development', function(){
 var callAPI = function (prop, callback) {
   var options = {
     method: prop.method,
-    uri: 'http://'+this.session.passport.user.username+':'+this.session.passport.user.password+'@localhost:3001' + prop.endpoint,
-    json: true
+    uri: 'http://'+this.session.passport.user.username+':'+this.session.passport.user.password+'@localhost:3001' + prop.endpoint
+  }
+
+  if (prop.json) {
+    options.json = prop.json;
+  } else {
+    options.json = true;
   }
 
   request(options, function (err, r, body) {
@@ -137,6 +143,10 @@ passport.use(new LocalStrategy(
       json: true
     }
     request(options, function (err, res, body) {
+      if (err) {
+        return done(err);
+      }
+
       if (body && body.error) {
         console.log(body.payload);
         return done(null, false, { message: body.payload });
@@ -246,6 +256,7 @@ app.get('/', function (req, res) {
   });
 });
 
+// GET /user/adrian
 app.get('/user/:username', ensureAuthenticated, function (req, res) {
   var options = {
     method: 'GET',
@@ -262,6 +273,35 @@ app.get('/user/:username', ensureAuthenticated, function (req, res) {
   });
 });
 
+app.get('/:organization/slides/create', ensureAuthenticated, function (req, res) {
+  var options = {
+    method: 'GET',
+    endpoint: '/locations/' + req.param('organization')
+  };
+
+  req.callAPI(options, function (err, body) {
+    if (err) {
+      return callback(err);
+    }
+
+    if (body.error) {
+      return res.send(body)
+    }
+
+    console.log(body);
+    res.locals.organization = req.param('organization');
+    res.locals.location = body;
+    res.render('slide/create');
+  });
+
+});
+
+app.get('/:organization/locations/create', ensureAuthenticated, function (req, res) {
+  res.locals.organization = req.param('organization');
+  res.render('location/create');
+});
+
+// GET /eus
 app.get('/:organization', ensureAuthenticated, function (req, res) {
   async.parallel({
     organization: function (callback) {
@@ -315,7 +355,58 @@ app.get('/:organization', ensureAuthenticated, function (req, res) {
   });
 });
 
+// GET /eus/slides
+app.get('/:organization/slides', function (req, res) {
+  res.send('nothing here');
+});
+
+// POST /eus/slides
+app.post('/:organization/slides', ensureAuthenticated, function (req, res) {
+  var options = {
+    method: 'POST',
+    endpoint: '/slides/' + req.param('organization') + "/slides",
+    json: req.body
+  };
+
+  req.callAPI(options, function (req, body) {
+    console.log(body);
+    res.render('slide');
+  });
+
+  res.send('post received');
+});
+
+// POST /eus/locations
+app.post('/:organization/locations', ensureAuthenticated, function (req, res) {
+  var options = {
+    method: 'POST',
+    endpoint: '/locations/' + req.param('organization'),
+    json: req.body
+  };
+
+  req.callAPI(options, function (req, body) {
+    console.log(body);
+    res.send(body);
+  });
+
+});
+
+// GET /eus/slides/510fea5ef0b7dd6aae00000e
+app.get('/:organization/slides/:id', function (req, res) {
+  var options = {
+    method: 'GET',
+    endpoint: '/slides/' + req.param('organization') + '/slides/' + req.param('id')
+  };
+
+  req.callAPI(options, function (req, body) {
+    res.locals.slide = body;
+    res.render('slide');
+  });
+});
+
+// GET /eus/trottier
 app.get('/:organization/:location', ensureAuthenticated, function (req, res) {
+  console.log("org:location");
   async.parallel({
     location: function (callback) {
       var options = {
@@ -334,22 +425,20 @@ app.get('/:organization/:location', ensureAuthenticated, function (req, res) {
     slides: function (callback) {
       var options = {
         method: 'GET',
-        endpoint: '/slides/' + req.param('organization') + '/slides?location=' + req.param('location')
+        endpoint: '/slides/' + req.param('organization') + '/slides/?location=' + req.param('organization') + '/' + req.param('location')
       };
 
       req.callAPI(options, function (err, body) {
-        // if (err) {
-        //   return callback(err, body);
-        // }
-
+        if (err) {
+          return callback(err);
+        }
+        // console.log(body);
         return callback(null, body);
       });
     },
   },
   // final callback
   function (err, results) {
-    console.log(results.location);
-    console.log(results.slides);
     res.locals.location = results.location;
     res.locals.slides = results.slides;
     return res.render('location');

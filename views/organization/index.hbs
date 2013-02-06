@@ -3,14 +3,23 @@
 {{#properties organization}}{{/properties}}
 
 <h3 class="subheader">Locations</h3>
+<ul>
 {{#each locations}}
   <li><a href="/{{this.id}}">{{this.id}}</a></li>
 {{/each}}
+</ul>
 
 <h3 class="subheader">Slides</h3>
+<ul>
 {{#unless slides}}
 No slides for {{organization.name}}
 {{/unless}}
 {{#each slides}}
   <li><a href="/{{this.organization}}/slides/{{this._id}}">{{this.title}}</a></li>
 {{/each}}
+</ul>
+<h3 class="subheader">Actions</h3>
+<ul>
+  <li><a href="/{{organization.id}}/slides/create">Create New Slide</a></li>
+  <li><a href="/{{organization.id}}/locations/create">Create New Location</a></li>
+</ul>

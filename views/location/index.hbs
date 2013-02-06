@@ -1,10 +1,13 @@
 <h2 class="subheader">{{location.name}}</h2>
 <h3 class="subheader">Location info</h3>
+{{#unless location}}
+Location does not seem to exist
+{{/unless}}
 {{#properties location}}{{/properties}}
 
 <h3 class="subheader">Slides</h3>
 {{#unless slides}}
-No slides for {{location.name}}
+No slides for Location
 {{/unless}}
 {{#each slides}}
   <li><a href="/{{this.organization}}/slides/{{this._id}}">{{this.title}}</a></li>

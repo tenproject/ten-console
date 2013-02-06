@@ -1,0 +1,32 @@
+<h2 class="subheader">Create Location - {{organization}}</h2>
+
+<div class="row">
+  <div class="six columns">
+    <form>
+      <fieldset>
+
+        <legend>New Location</legend>
+        <label>Organization</label>
+        <input type="text" value={{organization}} DISABLED/>
+
+        <label>Short Location Name (one word, A-a, 0-9)</label>
+        <input type="text" placeholder="rutherford" id="location_id"/>
+
+        <label>Full Location Name</label>
+        <input type="text" placeholder="Rutherford Physics Building" id="location_name"/>
+
+        <!--
+        <label>Access Mode</label>
+        <div class="row">
+          <div class="four columns">
+            <label for="radio4"><input name="type" type="radio" id="radio4" CHECKED> Invite Only</label>
+            <label for="radio5"><input name="type" type="radio" id="radio5"> Organization Member</label>
+          </div>
+        </div>
+        -->
+
+      </fieldset>
+    </form>
+    <button class="button submit" onclick="TEN.createLocation('{{organization}}')">Submit Slide for Approval</button>
+  </div>
+</div>

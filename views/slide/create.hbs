@@ -1,0 +1,55 @@
+<h2 class="subheader">Create Slide - {{organization}}</h2>
+
+<div class="row">
+  <div class="six columns">
+    <form>
+      <fieldset>
+
+        <legend>New Slide</legend>
+
+        <label>Title</label>
+        <input type="text" placeholder="Techfair 2013" />
+
+        <label>Description</label>
+        <textarea type="text" placeholder="Event details"></textarea>
+
+        <label>Event URL</label>
+        <input type="text" placeholder="http://facebook.com/events/12345" />
+
+        <hr/>
+
+        <label>Locations</label>
+        <div class="row">
+          <div class="four columns">
+            {{#each location}}
+              <label for="checkbox"><input type="checkbox" id="checkbox3" /> {{this.name}}</label>
+            {{/each}}
+          </div>
+        </div>
+
+        <hr/>
+
+        <label>Content Type</label>
+        <div class="row">
+          <div class="four columns">
+            <label for="radio4"><input name="type" type="radio" id="radio4" CHECKED> Image</label>
+            <label for="radio5"><input name="type" type="radio" id="radio5" disabled> Video</label>
+            <label for="radio6"><input name="type" type="radio" id="radio6" disabled> Text</label>
+            <label for="radio7"><input name="type" type="radio" id="radio6" disabled> Webpage</label>
+          </div>
+        </div>
+
+        <br/>
+
+        <label>Content Upload</label>
+        <input type='file' name="image[]" />
+
+        <hr/>
+
+        <label>Remarks</label>
+        <textarea type="text" placeholder="Have anything to mention to {{organization}}?"></textarea>
+      </fieldset>
+    </form>
+    <button class="button submit">Submit Slide for Approval</button>
+  </div>
+</div>
