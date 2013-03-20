@@ -1,0 +1,12 @@
+extends ../../views/layout
+
+block content
+  .row
+    .twelve.columns
+      h3.subheader View Profile
+      - if (user.isAdmin)
+        h5.subheader ID: #{profile._id}
+        h5.subheader Email: #{profile.email}
+      h5.subheader Username: #{profile.username}
+      h5.subheader Full name: #{profile.firstname} #{profile.lastname}
+      h5.subheader Join Date: #{formatDate(profile.time_created)} - #{profile.time_created}

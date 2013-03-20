@@ -5,12 +5,15 @@ block content
     .twelve.columns
       h3.subheader Hello #{user.firstname} #{user.lastname},
   .row
-    .three.columns
-      ul.nav-bar.vertical
-        li: a(href="/slides/create") Create Slide
-        li: a(href="/slides") List Slides
-      ul.nav-bar.vertical
+    .large-12.columns
+      ul.side-nav
+        li: a(href="/organizations/create") Create Organization
+        li: a(href="/organizations") List Organization
+    .large-12.columns
+      ul.side-nav
         li: a(href="/locations/create") Create Location
         li: a(href="/locations") List Location
-    .three.columns
-    .three.columns
+    .large-12.columns
+      ul.side-nav
+        li: a(href="/slides/create") Create Slide
+        li: a(href="/slides") List Slides

@@ -1,0 +1,32 @@
+extends ../../views/layout
+
+block content
+  .row
+    h3.subheader Organizations
+
+    - if (user.isAdmin)
+      a(href="/organizations/create") Create A New Organizations
+
+    - if (typeof organizations == "object")
+      table
+        thead
+          tr
+            th Organization Name
+            th(width="100") Created By
+            th(width="200") Actions
+        tbody
+          for organization in organizations
+            //- tr(onclick="window.location.href = '/organizations/edit/#{organization._id}'")
+            tr
+              td= organization.name
+              td
+                if (organization.created_by)
+                  a(href='/users/#{organization.created_by._id}') #{organization.created_by.username}
+              td
+                ul.inline-list
+                  li(data-tooltip, class="has-tip", title="Show location of #{organization.name}")
+                    a(href='/locations?organization=#{organization._id}') show
+                  li(data-tooltip, class="has-tip", title="Edit #{organization.name}'s information")
+                    a(href='/organizations/edit/#{organization._id}') edit
+    - else
+      h4.subheader No Organizations

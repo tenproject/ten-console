@@ -1,22 +1,15 @@
 var express = require('express'),
-    passport = require('passport'),
-    LocalStrategy = require('passport-local').Strategy,
-    RedisStore = require('connect-redis')(express);
+  passport = require('passport'),
+  LocalStrategy = require('passport-local').Strategy,
+  RedisStore = require('connect-redis')(express);
 
-var app         = express(),
-    database    = require('./libs/database'),
-    api         = require('./libs/api'),
-    login       = require('./libs/login'),
-    users       = require('./libs/users'),
-    slides      = require('./libs/slides'),
-    locations   = require('./libs/locations'),
-    mixin       = require('./libs/mixin'),
-    viewHandler = require('./libs/view');
+var app = express(),
+  mixin = require('./libs/mixin');
 
 // Express Configuration
 app.set('port', process.argv[2] || 3000);
 app.set('view engine', 'jade');
-// app.locals.pretty = true;
+app.locals.pretty = true;
 
 // Express Middleware Stack
 
@@ -27,12 +20,18 @@ app.use(express.logger('dev'));
 app.use(express.compress());
 
 // serve static files
-app.use(express.static(__dirname + '/public', { maxAge: 3600000 }));
+app.use(express.static(__dirname + '/public', {
+  maxAge: 3600000
+}));
 app.use(express.favicon());
 
 // error handler
-app.use(express.errorHandler({ dumpExceptions: true, showStack: true }));
+app.use(express.errorHandler({
+  dumpExceptions: true,
+  showStack: true
+}));
 
+// catch unhandled exceptions
 process.on('uncaughtException', function(err) {
   console.error(err.stack);
 });
@@ -62,7 +61,7 @@ app.use(passport.session());
 
 // csrf and middleware for passing token to template
 app.use(express.csrf());
-app.use(function (req, res, next) {
+app.use(function(req, res, next) {
   res.locals.csrftoken = req.session._csrf;
   next();
 });
@@ -91,27 +90,32 @@ app.use(function (req, res, next) {
 // });
 
 // expose template view handlers
-app.use(viewHandler());
+app.use(require('./libs/view')());
 
 // ten app modules
-app.use(login);
-app.use(api);
-app.use(users);
-app.use(slides);
-app.use(locations);
+app.use(require('./libs/login'));
+app.use(require('./libs/api'));
+app.use(require('./libs/users'));
+app.use(require('./libs/slides'));
+app.use(require('./libs/organizations'));
+app.use(require('./libs/locations'));
 
 // route middleware
 app.use(app.router);
 
-app.get('/', function (req, res) {
-  res.render('index', { user: req.user });
+app.get('/', function(req, res) {
+  res.render('index', {
+    user: req.user
+  });
 });
 
 app.get('/console', mixin.ensureAuthenticated, function(req, res) {
-  res.render('console', { user: req.user });
+  res.render('console', {
+    user: req.user
+  });
 });
 
 // start listen on port 3000
-app.listen(app.get('port'), function () {
+app.listen(app.get('port'), function() {
   console.log("Express server running on port " + app.get('port'));
 });

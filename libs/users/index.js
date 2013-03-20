@@ -55,8 +55,8 @@ app.get('/users/:id', function (req, res) {
     if (err) {
       // res.render('500');
     } else {
-      res.locals.user = doc;
-      res.render('profile');
+      res.locals.profile = doc;
+      res.render('profile_public');
     }
   });
 });

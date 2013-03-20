@@ -1,0 +1,32 @@
+extends ../../views/layout
+
+block content
+  .row
+    h3.subheader Organizations
+    - if (!user.isAdmin)
+      //- User is not an admin.
+      p You are not an admin, can not create an Organization
+    - else
+      //- User is an admin.
+      .eight.columns
+        h3.subheader Create a new Organization
+        form(action="/organizations/create", method="POST")
+          input(type='hidden', name='_csrf', value='#{csrftoken}')
+          .row
+            .three.mobile-one.columns
+              label.right.inline Organization Name:
+            .nine.mobile-three.columns
+              input.eight(type='text', name="name", placeholder='e.g. Engineering Undergraduate Society')
+          .row
+            .three.mobile-one.columns
+              label.right.inline Remarks:
+            .nine.mobile-three.columns
+              textarea(type='text', name="remarks", placeholder="e.g. Notes", rows="4")
+          .row
+            br
+            br
+            input.button(type="submit") Submit
+            &nbsp;
+            a.button(value="Cancel", href="/console") Cancel
+
+

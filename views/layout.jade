@@ -8,13 +8,11 @@ html(lang="en")
     meta(name="viewport", content="width=device-width")
     block head
       //- link(href="//netdna.bootstrapcdn.com/twitter-bootstrap/2.2.1/css/bootstrap.min.css", rel="stylesheet")
-      link(href="//cdnjs.cloudflare.com/ajax/libs/foundation/3.2.2/stylesheets/foundation.min.css", rel="stylesheet")
+      link(href="//cdnjs.cloudflare.com/ajax/libs/foundation/4.0.9/css/foundation.min.css", rel="stylesheet")
       link(href="/css/style.css", rel="stylesheet")
-
-      script(src="//cdnjs.cloudflare.com/ajax/libs/foundation/3.2.2/javascripts/foundation.min.js")
   body
     nav.top-bar.fixed
-      ul
+      ul.title-area
         li.name
           h1
             - if (!user)
@@ -23,8 +21,14 @@ html(lang="en")
               a(href='/console') TEN Console
         li.toggle-topbar
           a(href="#")
-      section
+      section.top-bar-section
         ul.left
+          li.divider
+          li
+            a(href='/organizations') Organizations
+          li.divider
+          li
+            a(href='/locations') Locations
           li.divider
           li
             a(href='/api') API Documentation
@@ -58,11 +62,11 @@ html(lang="en")
 
     // Dependencies
     block scripts
-      script(src="https://ajax.googleapis.com/ajax/libs/jquery/1.7.2/jquery.min.js")
-      //- script(src="//netdna.bootstrapcdn.com/twitter-bootstrap/2.2.1/js/bootstrap.min.js")
-      //- script(src="/underscore/underscore.js")
-      //- script(src="/handlebars/handlebars-1.0.0-rc.1.js")
-      //- script(src="/backbone/backbone.js")
-      //- script(src="/layoutmanager/backbone.layoutmanager.js")
+      //- script(src="https://ajax.googleapis.com/ajax/libs/jquery/1.7.2/jquery.min.js")
+      script(src="//cdnjs.cloudflare.com/ajax/libs/foundation/4.0.9/js/vendor/zepto.js")
+      script(src="//cdnjs.cloudflare.com/ajax/libs/foundation/4.0.9/js/vendor/custom.modernizr.js")
+      script(src="//cdnjs.cloudflare.com/ajax/libs/foundation/4.0.9/js/foundation.min.js")
+      script(src="//cdnjs.cloudflare.com/ajax/libs/foundation/4.0.9/js/foundation/foundation.tooltips.js")
 
-      // Appication Source
+      script
+        $(document).foundation();

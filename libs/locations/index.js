@@ -10,14 +10,28 @@ app.set('view engine', 'jade');
 
 // Routes
 app.get('/locations', function (req, res) {
-  database.Location.find({})
-  .limit(10)
-  .sort('field -_id')
-  .populate('user', 'username')
-  .exec(function (err, docs) {
-    res.locals.locations = docs;
-    res.render('locations');
-  });
+  if (req.param('organization')) {
+    database.Location.find({ organization: req.param('organization') })
+      .populate('user', 'username')
+      .populate('organization')
+      .exec(function (err, docs) {
+        if (err) {
+          return res.json({ error: err, payload: "Probably not found" });
+        }
+
+        res.locals.organization = req.param('organization');
+        res.locals.locations = docs || null;
+        res.render('locations');
+      });
+  } else {
+    database.Location.find({})
+      .sort('field -_id')
+      .populate('user', 'username')
+      .exec(function (err, docs) {
+        res.locals.locations = docs;
+        res.render('locations');
+      });
+  }
 });
 
 app.get('/locations/create', function (req, res) {

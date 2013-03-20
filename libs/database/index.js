@@ -27,7 +27,8 @@ var userSchema = mongoose.Schema({
   password: { type: String, required: true, trim : true },
   email: { type: String, lowercase: true, required: true, trim : true },
   organization: { type: String, trim : true },
-  time_created: { type: Date, default: Date.now },
+  isAdmin: { type: Boolean, default: false },
+  time_created: { type: Date, default: Date.now }
 });
 
 var locationSchema = mongoose.Schema({
@@ -35,7 +36,16 @@ var locationSchema = mongoose.Schema({
   building: { type: String, required: true, trim: true },
   user: { type: mongoose.Schema.ObjectId, ref: 'User' },
   remarks: { type: String },
-  status: { type: String, enum: ['online', 'offline', 'warning'] }
+  organization: { type: mongoose.Schema.ObjectId, ref: 'Organization' },
+  status: { type: String, enum: ['online', 'offline', 'warning'] },
+  time_created: { type: Date, default: Date.now }
+});
+
+var organizationSchema = mongoose.Schema({
+  name: { type: String, required:true, trim: true },
+  created_by: { type: mongoose.Schema.ObjectId, ref: 'User' },
+  time_created: { type: Date, default: Date.now },
+  remarks: { type: String }
 });
 
 userSchema.methods.validPassword = function (password) {
@@ -45,5 +55,6 @@ userSchema.methods.validPassword = function (password) {
 module.exports = {
   Slide: mongoose.model('Slide', slideSchema),
   User: mongoose.model('User', userSchema),
-  Location: mongoose.model('Location', locationSchema)
+  Location: mongoose.model('Location', locationSchema),
+  Organization: mongoose.model('Organization', organizationSchema)
 };
