@@ -6,23 +6,40 @@ block content
       | Locations
       - if (typeof organization == "string")
         |  for #{organization}
-    - if (locations)
+
+    - if (user.isAdmin)
+      a(href="/locations/create") Create A New Location
+
+  br
+
+  .row
+    - if (typeof locations == "object")
       table.twelve
         thead
           tr
+            th Status
             th Name
             th Building
-            th Author
-            th Status
+            th Remarks
+            th Created By
+            th Actions
         tbody
           for location in locations
             //- tr(onclick="window.location.href = '/locations/edit/#{location._id}'")
             tr
+              td: a(href="#{location.status}") #{location.status}
               td= location.name
               td= location.building
+              td= location.remarks
               td
                 if (location.user)
                   a(href='/users/#{location.user._id}') #{location.user.username}
-              td: a(href="#{location.status}") #{location.status}
+              td
+                ul.inline-list
+                  li(data-tooltip, class="has-tip", title="Show slides for #{location.name}")
+                    a(href='/slides?location=#{location._id}') show slides
+                  - if (user.isAdmin)
+                    li(data-tooltip, class="has-tip", title="Edit #{location.name}'s information")
+                      a(href='/locations/edit/#{location._id}') edit
     - else
       h4.subheader No Locations

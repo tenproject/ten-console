@@ -3,6 +3,8 @@ var express = require('express'),
     mixin = require('../mixin'),
     request = require('request');
 
+var slides = require('../api/slides');
+
 var app = module.exports = express();
 
 // Views
@@ -80,13 +82,39 @@ app.delete('/slides/edit/:slide', mixin.ensureAuthenticated, function(req, res) 
 });
 
 app.get('/slides', mixin.ensureAuthenticated, function(req, res) {
-  var options = {};
+  // var options = {};
 
-  options.url = 'http://localhost:' + app.get('port') + '/api/slides';
-  options.json = true;
+  // options.url = 'http://localhost:' + app.get('port') + '/api/slides';
+  // options.json = true;
 
-  request.get(options, function(e, r, b) {
-    res.locals.slides = b;
-    res.render('list');
-  });
+  // request.get(options, function(e, r, b) {
+  //   res.locals.slides = b;
+  //   res.render('list');
+  // });
+
+  if (req.param('location')) {
+    database.Slide
+      .find({ location: { $in: [req.param('location')] } })
+      .populate('location')
+      .populate('user', 'username') // populates username & _id only
+      .sort('field -_id') // sort by ID chronological
+      .exec(function (err, slides) {
+        res.locals.slides = slides;
+        res.render('list');
+      });
+    return;
+  }
+
+  database.Slide
+    .find({})
+    .populate('location')
+    .populate('user', 'username') // populates username & _id only
+    .sort('field -_id') // sort by ID chronological
+    .exec(function (err, slides) {
+      if (err) {
+        return res.send(err);
+      }
+      res.locals.slides = slides;
+      res.render('list');
+    });
 });

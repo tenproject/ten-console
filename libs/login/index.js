@@ -30,9 +30,11 @@ passport.serializeUser(function(user, done) {
 });
 
 passport.deserializeUser(function(user, done) {
-  database.User.findById(user._id, function(err, user) {
-    done(err, user);
-  });
+  database.User.findById(user._id)
+    .select('-password')
+    .exec(function(err, user) {
+      done(err, user);
+    });
 });
 
 // Routes - Login

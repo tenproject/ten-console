@@ -13,7 +13,7 @@ var slideSchema = mongoose.Schema({
   description: { type: String, default : '', trim : true },
   remarks: { type: String, trim : true },
   user: { type: mongoose.Schema.ObjectId, ref: 'User' },
-  location: { type: [] },
+  location: { type: [ { type: mongoose.Schema.Types.ObjectId, ref: 'Location'} ] },
   source_url: { type: String, trim : true },
   status: { type: String, default: 'submitted', enum: ['submitted', 'rejected', 'success', 'alert', 'expired', 'online', 'offline', 'draft'] },
   time_created: { type: Date, default: Date.now },

@@ -55,11 +55,48 @@ app.post('/locations/create', function (req, res) {
 });
 
 app.get('/locations/:location', function (req, res) {
-  database.Slide.find({ location: { $in: [ req.params.location ] } })
-  .limit(10)
+  database.Slide.find({ location: { $in: [ req.param('location') ] } })
   .exec(function (err, docs) {
     res.locals.slides = docs;
 
     res.render('locations');
   });
+});
+
+
+app.get('/locations/edit/:location', function (req, res) {
+  database.Location
+    .findById(req.param('location'))
+    .exec(function (err, docs) {
+      if (err) {
+        return res.send(err);
+      }
+
+      res.locals.location = docs;
+      res.render('edit');
+    });
+});
+
+app.post('/locations/edit/:location', function (req, res) {
+  database.Location.findOneAndUpdate({ _id: req.param('location') }, req.body, function (err, doc) {
+    if (err) {
+      console.log(err);
+      return res.send(err);
+    }
+
+    res.locals.location = doc;
+    res.render('edit');
+  });
+});
+
+app.delete('/locations/edit/:location', function (req, res) {
+  database.Location
+    .findById(req.param('location'))
+    .exec(function (err, doc) {
+      if (err) return handleError(err);
+      doc.remove(function (err, doc) {
+        if (err) return handleError(err);
+        res.send(200);
+      });
+    });
 });

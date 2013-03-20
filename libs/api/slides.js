@@ -3,12 +3,12 @@ var mongoose = require('mongoose'),
 
 exports.list = function (req, res) {
   database.Slide.find({})
-  .limit(25)
-  .populate('user', 'username') // populates username & _id only
-  .sort('field -_id') // sort by ID chronological
-  .exec(function (err, slides) {
-    res.send(200, slides);
-  });
+    .limit(25)
+    .populate('user', 'username') // populates username & _id only
+    .sort('field -_id') // sort by ID chronological
+    .exec(function (err, slides) {
+      res.send(200, slides);
+    });
 };
 
 exports.retrieve = function(req, res) {

@@ -3,6 +3,13 @@ extends ../../views/layout
 block content
   .row
     h3.subheader List of Slides
+
+    - if (user.isAdmin)
+      a(href="/slides/create") Create A New Slide
+
+  br
+
+  .row
     table.twelve
       thead
         tr
@@ -25,7 +32,7 @@ block content
               td: a(href="#{slide.source_url}") #{slide.source_url}
               td
                 each location in slide.location
-                  span= capitalize(location)
+                  a(href='/slides?location=#{location._id}') #{location.name}
                   br
               td= capitalize(slide.status)
               td= formatDate(slide.time_created)
