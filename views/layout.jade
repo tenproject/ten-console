@@ -10,6 +10,7 @@ html(lang="en")
       //- link(href="//netdna.bootstrapcdn.com/twitter-bootstrap/2.2.1/css/bootstrap.min.css", rel="stylesheet")
       link(href="//cdnjs.cloudflare.com/ajax/libs/foundation/4.0.9/css/foundation.min.css", rel="stylesheet")
       link(href="/css/style.css", rel="stylesheet")
+
   body
     nav.top-bar.fixed
       ul.title-area
@@ -19,8 +20,8 @@ html(lang="en")
               a(href='/') TEN Console
             - else
               a(href='/console') TEN Console
-        li.toggle-topbar
-          a(href="#")
+        li.toggle-topbar.menu-icon
+          a(href="#") Menu
       section.top-bar-section
         ul.left
           li.divider
@@ -72,6 +73,8 @@ html(lang="en")
       script(src="//cdnjs.cloudflare.com/ajax/libs/foundation/4.0.9/js/vendor/zepto.js")
       script(src="//cdnjs.cloudflare.com/ajax/libs/foundation/4.0.9/js/vendor/custom.modernizr.js")
       script(src="//cdnjs.cloudflare.com/ajax/libs/foundation/4.0.9/js/foundation.min.js")
+      //- script(src="//cdnjs.cloudflare.com/ajax/libs/foundation/4.0.9/js/foundation/foundation.dropdown.js")
+      //- script(src="//cdnjs.cloudflare.com/ajax/libs/foundation/4.0.9/js/foundation/foundation.topbar.js")
       script(src="//cdnjs.cloudflare.com/ajax/libs/foundation/4.0.9/js/foundation/foundation.tooltips.js")
 
       script

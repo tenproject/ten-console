@@ -20,7 +20,7 @@ app.get('/locations', function (req, res) {
         }
 
         res.locals.organization = req.param('organization');
-        res.locals.locations = docs || null;
+        res.locals.locations = docs;
         res.render('locations');
       });
   } else {

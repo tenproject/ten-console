@@ -44,10 +44,20 @@ app.post('/organizations/create', function (req, res) {
 
 app.get('/organizations/:organization', function (req, res) {
   database.Organization
-    .find({ id: req.param('organization')})
+    .find({ _id: req.param('organization')})
     .populate('created_by', 'username')
     .exec(function (err, doc) {
       res.locals.organizations = doc;
       res.render('organizations');
+    });
+});
+
+app.get('/organizations/edit/:organization', function (req, res) {
+  database.Organization
+    .findOne({ _id: req.param('organization')})
+    .populate('created_by', 'username')
+    .exec(function (err, doc) {
+      res.locals.organization = doc;
+      res.render('edit');
     });
 });
