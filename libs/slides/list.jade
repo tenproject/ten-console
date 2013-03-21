@@ -10,7 +10,9 @@ block content
   br
 
   .row
-    table.twelve
+    h3.subheader Your Submitted Slides
+  .row
+    table.large-12
       thead
         tr
           th Title
@@ -20,9 +22,10 @@ block content
           th Location
           th Status
           th Submission Date
+          th Actions
       tbody
-        - if (slides && slides.length)
-          for slide in slides
+        - if (my_slides && my_slides.length)
+          for slide in my_slides
             tr(onclick="window.location.href = '/slides/edit/#{slide._id}'")
               td= slide.title
               td= slide.description
@@ -36,10 +39,59 @@ block content
                   br
               td= capitalize(slide.status)
               td= formatDate(slide.time_created)
+              td
+                ul.inline-list
+                  li
+                    a(href="/slides/#{slide._id}") show
+                  li
+                    a(href="/slides/edit/#{slide._id}") edit
         - else
           tr
             td
               h4.subheader No Slides
+
+  - if (slides)
+    .row
+      h3.subheader Submissions by others
+    .row
+      table.large-12
+        thead
+          tr
+            th Title
+            th Description
+            th Author
+            th Source
+            th Location
+            th Status
+            th Submission Date
+            th Actions
+        tbody
+          - if (slides && slides.length)
+            for slide in slides
+              tr(onclick="window.location.href = '/slides/edit/#{slide._id}'")
+                td= slide.title
+                td= slide.description
+                td
+                  if (slide.user)
+                    a(href='/users/#{slide.user._id}') #{slide.user.username}
+                td: a(href="#{slide.source_url}") #{slide.source_url}
+                td
+                  each location in slide.location
+                    a(href='/slides?location=#{location._id}') #{location.name}
+                    br
+                td= capitalize(slide.status)
+                td= formatDate(slide.time_created)
+                td
+                  ul.inline-list
+                    li
+                      a(href="/slides/#{slide._id}") show
+                    li
+                      a(href="/slides/edit/#{slide._id}") edit
+          - else
+            tr
+              td
+                h4.subheader No Slides
+  .row
     dl
       dt: strong Status Legend
       dd

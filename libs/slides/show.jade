@@ -1,0 +1,21 @@
+extends ../../views/layout
+
+block content
+  .row
+    h3.subheader Slide Viewer
+
+    - if (slide)
+      - if (user._id == slide.user._id || user.isAdmin)
+        h5.subheader Title:
+        p #{slide.title}
+        h5.subheader Description:
+        p #{slide.description}
+        h5.subheader Source URL:
+        p
+          a(href="#{slide.source_url}") #{slide.source_url}
+        h5.subheader Source Preview:
+        p
+          img(src="#{slide.source_url}")
+
+    - else
+      p Slide doesn't exist

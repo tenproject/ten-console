@@ -63,9 +63,9 @@ app.post('/slides/edit/:slide', mixin.ensureAuthenticated, function(req, res) {
     console.log(doc);
     if (err) {
       console.log(err);
-      res.render('edit', { user: req.user, slide: doc });
+      res.render('edit', { slide: doc });
     } else {
-      res.render('edit', { user: req.user, slide: doc });
+      res.render('edit', { slide: doc });
     }
   });
 });
@@ -94,27 +94,84 @@ app.get('/slides', mixin.ensureAuthenticated, function(req, res) {
 
   if (req.param('location')) {
     database.Slide
-      .find({ location: { $in: [req.param('location')] } })
-      .populate('location')
+      .find({ user: req.user._id, location: { $in: [req.param('location')] } })
+      .populate('location', 'name')
       .populate('user', 'username') // populates username & _id only
       .sort('field -_id') // sort by ID chronological
-      .exec(function (err, slides) {
-        res.locals.slides = slides;
-        res.render('list');
+      .exec(function (err, my_slides) {
+        if (err) {
+          return res.send(err);
+        }
+        if (req.user.isAdmin) {
+          // Everyone elses
+          database.Slide
+            .find({ user: {$nin: [req.user._id] }, location: { $in: [req.param('location')] } })
+            .populate('location')
+            .populate('user', 'username') // populates username & _id only
+            .sort('field -_id') // sort by ID chronological
+            .exec(function (err, slides) {
+              if (err) {
+                return res.send(err);
+              }
+              res.locals.my_slides = my_slides;
+              res.locals.slides = slides;
+              res.render('list');
+            });
+        } else {
+          res.locals.my_slides = my_slides;
+          res.locals.slides = null;
+          res.render('list');
+        }
       });
     return;
   }
 
+  // Your slides
   database.Slide
-    .find({})
-    .populate('location')
+    .find({ user: req.user._id })
+    .populate('location', 'name')
     .populate('user', 'username') // populates username & _id only
     .sort('field -_id') // sort by ID chronological
-    .exec(function (err, slides) {
+    .exec(function (err, my_slides) {
       if (err) {
         return res.send(err);
       }
-      res.locals.slides = slides;
-      res.render('list');
+      if (req.user.isAdmin) {
+        // Everyone elses
+        database.Slide
+          .find({ user: {$nin: [req.user._id] } })
+          .populate('location')
+          .populate('user', 'username') // populates username & _id only
+          .sort('field -_id') // sort by ID chronological
+          .exec(function (err, slides) {
+            if (err) {
+              return res.send(err);
+            }
+            res.locals.my_slides = my_slides;
+            res.locals.slides = slides;
+            res.render('list');
+          });
+      } else {
+        res.locals.my_slides = my_slides;
+        res.locals.slides = null;
+        res.render('list');
+      }
+    });
+});
+
+
+app.get('/slides/:slide', mixin.ensureAuthenticated, function(req, res) {
+  database.Slide
+    .findOne({ _id: req.param('slide')})
+    .populate('location', 'name')
+    .populate('user', 'username')
+    .exec(function (err, slide) {
+      if (err) {
+        console.log(err)
+        res.send(err);
+        return;
+      }
+      res.locals.slide = slide;
+      res.render('show');
     });
 });
