@@ -9,7 +9,7 @@ app.set('views', __dirname);
 app.set('view engine', 'jade');
 
 // Routes
-app.get('/users/me', function (req, res) {
+app.get('/users/me', mixin.ensureAuthenticated, function (req, res) {
   database.User.findById(req.user._id, function (err, doc) {
     if (err) {
       // res.render('500');
@@ -20,7 +20,7 @@ app.get('/users/me', function (req, res) {
   });
 });
 
-app.get('/users/me/edit', function (req, res) {
+app.get('/users/me/edit', mixin.ensureAuthenticated, function (req, res) {
   database.User.findById(req.user._id, function (err, doc) {
     if (err) {
       // res.render('500');
@@ -31,7 +31,7 @@ app.get('/users/me/edit', function (req, res) {
   });
 });
 
-app.post('/users/me/edit', function (req, res) {
+app.post('/users/me/edit', mixin.ensureAuthenticated, function (req, res) {
   var update = req.body;
 
   // Prevent saving empty password
@@ -50,7 +50,7 @@ app.post('/users/me/edit', function (req, res) {
   });
 });
 
-app.get('/users/:id', function (req, res) {
+app.get('/users/:id', mixin.ensureAuthenticated, function (req, res) {
   database.User.findById(req.params.id, function (err, doc) {
     if (err) {
       // res.render('500');

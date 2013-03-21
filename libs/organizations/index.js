@@ -9,7 +9,7 @@ app.set('views', __dirname);
 app.set('view engine', 'jade');
 
 // Routes
-app.get('/organizations', function (req, res) {
+app.get('/organizations', mixin.ensureAuthenticated, function (req, res) {
   database.Organization
     .find({})
     .populate('created_by', 'username')
@@ -23,7 +23,7 @@ app.get('/organizations/create', function (req, res) {
   res.render('create');
 });
 
-app.post('/organizations/create', function (req, res) {
+app.post('/organizations/create', mixin.ensureAuthenticated, function (req, res) {
   var organization = new database.Organization(req.body);
 
   console.log(req.body) ;
@@ -42,7 +42,7 @@ app.post('/organizations/create', function (req, res) {
   });
 });
 
-app.get('/organizations/:organization', function (req, res) {
+app.get('/organizations/:organization',  mixin.ensureAuthenticated, function (req, res) {
   database.Organization
     .find({ _id: req.param('organization')})
     .populate('created_by', 'username')
@@ -52,7 +52,7 @@ app.get('/organizations/:organization', function (req, res) {
     });
 });
 
-app.get('/organizations/edit/:organization', function (req, res) {
+app.get('/organizations/edit/:organization',  mixin.ensureAuthenticated, function (req, res) {
   database.Organization
     .findOne({ _id: req.param('organization')})
     .populate('created_by', 'username')

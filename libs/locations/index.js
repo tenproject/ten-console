@@ -9,7 +9,7 @@ app.set('views', __dirname);
 app.set('view engine', 'jade');
 
 // Routes
-app.get('/locations', function (req, res) {
+app.get('/locations', mixin.ensureAuthenticated, function (req, res) {
   if (req.param('organization')) {
     database.Location.find({ organization: req.param('organization') })
       .populate('user', 'username')
@@ -34,11 +34,11 @@ app.get('/locations', function (req, res) {
   }
 });
 
-app.get('/locations/create', function (req, res) {
+app.get('/locations/create', mixin.ensureAuthenticated, function (req, res) {
   res.render('create');
 });
 
-app.post('/locations/create', function (req, res) {
+app.post('/locations/create', mixin.ensureAuthenticated, function (req, res) {
   var location = new database.Location(req.body);
 
   location.user = req.user._id;
@@ -54,7 +54,7 @@ app.post('/locations/create', function (req, res) {
   });
 });
 
-app.get('/locations/:location', function (req, res) {
+app.get('/locations/:location', mixin.ensureAuthenticated, function (req, res) {
   database.Slide.find({ location: { $in: [ req.param('location') ] } })
   .exec(function (err, docs) {
     res.locals.slides = docs;
@@ -64,7 +64,7 @@ app.get('/locations/:location', function (req, res) {
 });
 
 
-app.get('/locations/edit/:location', function (req, res) {
+app.get('/locations/edit/:location', mixin.ensureAuthenticated, function (req, res) {
   database.Location
     .findById(req.param('location'))
     .exec(function (err, docs) {
@@ -77,7 +77,7 @@ app.get('/locations/edit/:location', function (req, res) {
     });
 });
 
-app.post('/locations/edit/:location', function (req, res) {
+app.post('/locations/edit/:location', mixin.ensureAuthenticated, function (req, res) {
   database.Location.findOneAndUpdate({ _id: req.param('location') }, req.body, function (err, doc) {
     if (err) {
       console.log(err);
@@ -89,7 +89,7 @@ app.post('/locations/edit/:location', function (req, res) {
   });
 });
 
-app.delete('/locations/edit/:location', function (req, res) {
+app.delete('/locations/edit/:location', mixin.ensureAuthenticated, function (req, res) {
   database.Location
     .findById(req.param('location'))
     .exec(function (err, doc) {
