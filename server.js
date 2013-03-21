@@ -110,9 +110,11 @@ app.get('/', function(req, res) {
 });
 
 app.get('/console', mixin.ensureAuthenticated, function(req, res) {
-  res.render('console', {
-    user: req.user
-  });
+  if (req.user.isAdmin) {
+    res.render('console');
+  } else {
+    res.redirect('/slides');
+  }
 });
 
 // start listen on port 3000
