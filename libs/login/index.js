@@ -52,15 +52,35 @@ app.get('/logout', function(req, res) {
 
 // Routes - Register
 app.get('/register', function(req, res) {
-  res.render('register', { user: req.user });
+  database.Organization
+    .find({})
+    .exec(function (err, doc) {
+      if (err) {
+        return res.send("Unable to retrieve organizations", err);
+      }
+      res.locals.organizations = doc;
+      res.render('register');
+    });
 });
 
 app.post('/register', function(req, res) {
-  var user = new database.User({ username: req.param('username'), email: req.param('email'), firstname: req.param('firstname'), lastname: req.param('lastname'), password: req.param('password') });
-  user.save(function(err) {
+  console.log(req.body);
+
+  var user = new database.User();
+
+  user.username = req.param('username');
+  user.email = req.param('email');
+  user.firstname = req.param('firstname');
+  user.lastname = req.param('lastname');
+  user.password = req.param('password');
+  user.organization = [req.param('organization')];
+
+  user.save(function(err, doc) {
     if (err) {
       console.log(err);
+      return res.send(err);
     }
+    console.log(doc);
     res.redirect('/');
   });
 });

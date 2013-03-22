@@ -1,3 +1,5 @@
+var _ = require('lodash');
+
 function formatDate (date) {
   if (typeof(date) == "string") {
     date = new Date(date);
@@ -24,7 +26,26 @@ function stringify (obj) {
 }
 
 function capitalize (string) {
-  return string.charAt(0).toUpperCase() + string.slice(1);;
+  return string.charAt(0).toUpperCase() + string.slice(1);
+}
+
+function tagStatus (string) {
+  switch (string) {
+    case "submitted":
+      return '<span class="label">Submitted</span>';
+    case "rejected":
+      return '<span class="label">Rejected</span>';
+    case "online":
+      return '<span class="label success">Online</span>';
+    case "offline":
+      return '<span class="label alert">Offline</span>';
+    case "expired":
+      return '<span class="label secondary">Expired</span>';
+    case "draft":
+      return '<span class="label secondary">Draft</span>';
+    default:
+      return null;
+  }
 }
 
 module.exports = function () {
@@ -34,6 +55,8 @@ module.exports = function () {
     res.locals.userObject = userObject;
     res.locals.stringify = stringify;
     res.locals.capitalize = capitalize;
+    res.locals.tagStatus = tagStatus;
+    res.locals._ = _;
 
     // objects
     res.locals.user = req.user;

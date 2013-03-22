@@ -2,83 +2,76 @@ extends ../../views/layout
 
 block content
   .row
-    .twelve.columns
+    .large-12.columns
       - if (typeof msg !== "undefined")
         .alert-box.alert #{msg}
+
   .row
-    .eight.columns
+    .large-12.columns
       h3.subheader Create a new Slide
-      form(action="/slides/create", method="POST")
+
+  .row
+    .large-8.columns
+      form.custom(action="/slides/create", method="POST")
         input(type='hidden', name='_csrf', value='#{csrftoken}')
+
+        //- TITLE
         .row
-          .three.mobile-one.columns
-            label.right.inline Slide Title:
-          .nine.mobile-three.columns
-            input.eight(type='text', name="title", placeholder='e.g. Meet Buddy Event')
+          .large-12.columns
+            h5.subheader Slide Title:
+            input(type='text', name="title", placeholder='e.g. Meet Buddy Event')
+
+        //- DESCRIPTION
         .row
-          .three.mobile-one.columns
-            label.right.inline Slide Description:
-          .nine.mobile-three.columns
+          .large-12.columns
+            h5.subheader Slide Description:
             input.eight(type='text', name="description", placeholder='e.g. Engineering Study Buddy Program')
+
+        //- ORGANIZATION
+          .row
+            .large-12.columns
+              h5.subheader Organization:
+              select(name="organization", class="small")
+                if organizations
+                  each organization in organizations
+                    option(value="#{organization._id}") #{organization.remarks}
+
+        //- LOCATIONS
         .row
-          .three.mobile-one.columns
-            label.right.inline Remarks:
-          .nine.mobile-three.columns
-            textarea(type='text', name="remarks", placeholder="e.g. Special requests or remarks goes here", rows="4")
+          .large-12.columns
+            h5.subheader Location:
+            if locations
+              each location in locations
+                <label for="checkbox#{location._id}"><input type="checkbox" id="checkbox#{location._id}" style="display: none;" value="#{location._id}"><span class="custom checkbox"></span> #{location.organization.name}/#{location.name}</label>
+
+        br
+
+        //- SOURCE URL
         .row
-          .three.mobile-one.columns
-            label.right.inline Location:
-          .nine.mobile-three.columns
-            label(for='checkbox1')
-              input(name="location", type='checkbox', value="trottier")
-              span.custom.checkbox
-              | Trottier
-            label(for='checkbox2')
-              input(name="location", type='checkbox', value="fda")
-              span.custom.checkbox.checked
-              | FDA
-            label(for='checkbox3')
-              input(name="location", type='checkbox', value="mcconnell")
-              | McConnell
-            label(for='checkbox4')
-              input(name="location", type='checkbox', value="rutherford")
-              span.custom.checkbox
-              | Rutherford
-            label(for='checkbox5')
-              input(name="location", type='checkbox', value="wong")
-              span.custom.checkbox.checked
-              | Wong
-            label(for='checkbox6')
-              input(name="location", type='checkbox', value="schulich")
-              | Schulich
-            label(for='checkbox7')
-              input(name="location", type='checkbox', value="leacock")
-              span.custom.checkbox
-              | Leacock
-            label(for='checkbox8')
-              input(name="location", type='checkbox', value="ssmu")
-              span.custom.checkbox.checked
-              | SSMU
-            label(for='checkbox9')
-              input(name="location", type='checkbox', value="ottomass")
-              span.custom.checkbox.checked
-              | Otto Mass
-        .row
-          .three.mobile-one.columns
-            label.right.inline Source URL:
-          .nine.mobile-three.columns
+          .large-12.columns
+            h5.subheader Source URL:
             input.eight(type='text', name="source_url", placeholder='e.g. http://placehold.it/1920x1080', value="http://placehold.it/1920x1080")
+
+        //- UPLOAD BUTTON
         .row
-          .three.mobile-one.columns
-            label.right.inline Upload:
-          .nine.mobile-three.columns
+          .large-12.columns
+            h5.subheader Upload (accepted formats: .jpg, .jpeg, .png):
             input(type="file", name="file")
-            label Accepted formats: .jpg, .jpeg, .png
+
+        br
+
+        //- REMARKS
         .row
-          br
-          br
-          input.button(type="submit") Submit
-          &nbsp;
-          a.button(value="Cancel", href="/console") Cancel
+          .large-12.columns
+            h5.subheader Remarks:
+            textarea(type='text', name="remarks", placeholder="e.g. Special requests or remarks goes here", rows="4")
 
+        br
+        br
 
+        //- SUBMIT BUTTON
+        .row
+          .large-12.columns
+            input.button(class="success", type="submit") Submit
+            &nbsp;
+            a.button(value="Cancel", href="/console") Cancel

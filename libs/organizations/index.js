@@ -61,3 +61,16 @@ app.get('/organizations/edit/:organization',  mixin.ensureAuthenticated, functio
       res.render('edit');
     });
 });
+
+app.post('/organizations/edit/:organization', mixin.ensureAuthenticated, function (req, res) {
+  database.Organization
+    .findOneAndUpdate({ _id: req.param('organization') }, req.body, function (err, doc) {
+    if (err) {
+      console.log(err);
+      return res.send(err);
+    }
+
+    res.locals.organization = doc;
+    res.render('edit');
+  });
+});

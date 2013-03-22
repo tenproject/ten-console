@@ -3,10 +3,13 @@ extends ../../views/layout
 block content
   .row
     .five.columns.centered
-      form(method="POST", action="/register")
+      form.custom(method="POST", action="/register")
         input(type='hidden', name='_csrf', value='#{csrftoken}')
         fieldset
           legend Register
+          select(name="organization", class="large")
+            each item in organizations
+              option(value="#{item._id}") #{item.remarks}
           input(type="text", name="username", placeholder="Username")
           input(type="text", name="firstname", placeholder="First name")
           input(type="text", name="lastname", placeholder="Last name")

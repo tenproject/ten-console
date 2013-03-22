@@ -21,19 +21,19 @@ block content
             th Name
             th Building
             th Remarks
-            th Created By
+            //- th Created By
             th Actions
         tbody
           for location in locations
             //- tr(onclick="window.location.href = '/locations/edit/#{location._id}'")
             tr
-              td: a(href="#{location.status}") #{location.status}
+              td= location.status
               td= location.name
               td= location.building
               td= location.remarks
-              td
-                if (location.user)
-                  a(href='/users/#{location.user._id}') #{location.user.username}
+              //- td
+              //-   if (location.user)
+              //-     a(href='/users/#{location.user._id}') #{location.user.username}
               td
                 ul.inline-list
                   li(data-tooltip, class="has-tip", title="Show slides for #{location.name}")

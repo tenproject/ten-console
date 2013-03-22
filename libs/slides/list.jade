@@ -4,8 +4,7 @@ block content
   .row
     h3.subheader List of Slides
 
-    - if (user.isAdmin)
-      a(href="/slides/create") Create A New Slide
+    a(href="/slides/create") Create A New Slide
 
   br
 
@@ -18,7 +17,7 @@ block content
           th Title
           th Description
           th Author
-          th Source
+          //- th Source
           th Location
           th Status
           th Submission Date
@@ -26,18 +25,19 @@ block content
       tbody
         - if (my_slides && my_slides.length)
           for slide in my_slides
-            tr(onclick="window.location.href = '/slides/edit/#{slide._id}'")
+            //- tr(onclick="window.location.href = '/slides/edit/#{slide._id}'")
+            tr
               td= slide.title
               td= slide.description
               td
                 if (slide.user)
                   a(href='/users/#{slide.user._id}') #{slide.user.username}
-              td: a(href="#{slide.source_url}") #{slide.source_url}
+              //- td: a(href="#{slide.source_url}") #{slide.source_url}
               td
                 each location in slide.location
                   a(href='/slides?location=#{location._id}') #{location.name}
                   br
-              td= capitalize(slide.status)
+              td !{tagStatus(slide.status)}
               td= formatDate(slide.time_created)
               td
                 ul.inline-list
@@ -60,7 +60,7 @@ block content
             th Title
             th Description
             th Author
-            th Source
+            //- th Source
             th Location
             th Status
             th Submission Date
@@ -68,18 +68,19 @@ block content
         tbody
           - if (slides && slides.length)
             for slide in slides
-              tr(onclick="window.location.href = '/slides/edit/#{slide._id}'")
+              //- tr(onclick="window.location.href = '/slides/edit/#{slide._id}'")
+              tr
                 td= slide.title
                 td= slide.description
                 td
                   if (slide.user)
                     a(href='/users/#{slide.user._id}') #{slide.user.username}
-                td: a(href="#{slide.source_url}") #{slide.source_url}
+                //- td: a(href="#{slide.source_url}") #{slide.source_url}
                 td
                   each location in slide.location
                     a(href='/slides?location=#{location._id}') #{location.name}
                     br
-                td= capitalize(slide.status)
+                td !{tagStatus(slide.status)}
                 td= formatDate(slide.time_created)
                 td
                   ul.inline-list

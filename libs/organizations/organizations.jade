@@ -16,7 +16,7 @@ block content
           tr
             th Organization Name
             th Remarks
-            th Created By
+            //- th Created By
             th Actions
         tbody
           for organization in organizations
@@ -24,15 +24,14 @@ block content
             tr
               td= organization.name
               td= organization.remarks
-              td
-                if (organization.created_by)
-                  a(href='/users/#{organization.created_by._id}') #{organization.created_by.username}
+              //- td
+              //-   if (organization.created_by)
+              //-     a(href='/users/#{organization.created_by._id}') #{organization.created_by.username}
               td
                 ul.inline-list
                   li(data-tooltip, class="has-tip", title="Show locations for #{organization.name}")
                     a(href='/locations?organization=#{organization._id}') show locations
-                  - if (user.isAdmin)
-                    li(data-tooltip, class="has-tip", title="Edit #{organization.name}'s information")
-                      a(href='/organizations/edit/#{organization._id}') edit
+                  li(data-tooltip, class="has-tip", title="Edit #{organization.name}'s information")
+                    a(href='/organizations/edit/#{organization._id}') edit
     - else
       h4.subheader No Organizations

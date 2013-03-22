@@ -14,7 +14,19 @@ app.set('view engine', 'jade');
 // Routes
 // Create Slide
 app.get('/slides/create', mixin.ensureAuthenticated, function(req, res) {
-  res.render('create', { user: req.user });
+  database.Organization
+    .find({_id: { $in: req.user.organization }})
+    .exec(function (err, organizations) {
+      database.Location
+        .find({organization: { $in: req.user.organization }})
+        .populate('organization')
+        .exec(function (err, locations) {
+          console.log(locations);
+          res.locals.organizations = organizations;
+          res.locals.locations = locations;
+          res.render('create');
+        });
+    });
 });
 
 // Create Slide
@@ -50,24 +62,78 @@ app.post('/slides/create', mixin.ensureAuthenticated, function(req, res) {
 });
 
 app.get('/slides/edit/:slide', mixin.ensureAuthenticated, function(req, res) {
-  database.Slide.findById( req.params.slide )
-    .exec(function (err, doc) {
-      console.log(doc);
+  if (req.user.isAdmin) {
+    database.Organization
+      .find({})
+      .exec(function (err, doc) {
+        var org_array = [];
+
+        for (var i = 0; i < doc.length; i++) {
+          org_array.push(doc[i]._id);
+        }
+          database.User
+            .findOneAndUpdate({ _id: req.user._id }, { organization: org_array })
+            .exec(function (err, doc) {
+              if (err) return res.send(err);
+              console.log(doc);
+            });
+      });
+  }
+
+  database.Slide
+    .findById( req.params.slide )
+    .populate('location')
+    .populate('user')
+    .exec(function (err, slide) {
+      console.log(slide);
       if (err) return handleError(err);
-      res.render('edit', { user: req.user, slide: doc});
+
+        database.Organization
+          .find({_id: { $in: slide.user.organization }})
+          .exec(function (err, organizations) {
+            database.Location
+              .find({organization: { $in: slide.user.organization }})
+              .populate('organization')
+              .exec(function (err, locations) {
+                res.locals.organizations = organizations;
+                res.locals.locations = locations || null;
+                res.locals.slide = slide;
+                res.render('edit');
+              });
+          });
     });
 });
 
 app.post('/slides/edit/:slide', mixin.ensureAuthenticated, function(req, res) {
-  database.Slide.findOneAndUpdate({ _id: req.params.slide }, req.body, function (err, doc) {
-    console.log(doc);
-    if (err) {
-      console.log(err);
-      res.render('edit', { slide: doc });
-    } else {
-      res.render('edit', { slide: doc });
-    }
-  });
+  console.log(req.body);
+  if (!req.body.location) {
+    req.body.location = [];
+  }
+
+  database.Slide
+    .findOneAndUpdate({ _id: req.params.slide }, req.body)
+    .populate('user')
+    .exec(function (err, doc) {
+      console.log(doc);
+      if (err) {
+        console.log(err);
+        return res.send(err);
+      }
+
+      database.Organization
+        .find({_id: { $in: doc.user.organization }})
+        .exec(function (err, organizations) {
+          database.Location
+            .find({organization: { $in: doc.user.organization }})
+            .populate('organization')
+            .exec(function (err, locations) {
+              res.locals.organizations = organizations;
+              res.locals.locations = locations;
+              res.locals.slide = doc;
+              res.render('edit');
+            });
+        });
+    });
 });
 
 app.delete('/slides/edit/:slide', mixin.ensureAuthenticated, function(req, res) {

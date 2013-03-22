@@ -14,6 +14,7 @@ var slideSchema = mongoose.Schema({
   remarks: { type: String, trim : true },
   user: { type: mongoose.Schema.ObjectId, ref: 'User' },
   location: { type: [ { type: mongoose.Schema.Types.ObjectId, ref: 'Location'} ] },
+  organization: { type: mongoose.Schema.ObjectId, ref: 'Organization', default: null },
   source_url: { type: String, trim : true },
   status: { type: String, default: 'submitted', enum: ['submitted', 'rejected', 'success', 'alert', 'expired', 'online', 'offline', 'draft'] },
   time_created: { type: Date, default: Date.now },
@@ -26,7 +27,7 @@ var userSchema = mongoose.Schema({
   lastname: { type: String, default : '', trim : true },
   password: { type: String, required: true, trim : true },
   email: { type: String, lowercase: true, required: true, trim : true },
-  organization: { type: String, trim : true },
+  organization: { type: [{ type: mongoose.Schema.ObjectId, ref: 'Organization' }], default: [] },
   isAdmin: { type: Boolean, default: false },
   time_created: { type: Date, default: Date.now }
 });
@@ -37,7 +38,7 @@ var locationSchema = mongoose.Schema({
   user: { type: mongoose.Schema.ObjectId, ref: 'User' },
   remarks: { type: String },
   organization: { type: mongoose.Schema.ObjectId, ref: 'Organization' },
-  status: { type: String, enum: ['online', 'offline', 'warning'] },
+  status: { type: String, enum: ['online', 'offline', 'warning', 'unknown'], default: 'unknown' },
   time_created: { type: Date, default: Date.now }
 });
 
@@ -45,7 +46,7 @@ var organizationSchema = mongoose.Schema({
   name: { type: String, required:true, trim: true },
   created_by: { type: mongoose.Schema.ObjectId, ref: 'User' },
   time_created: { type: Date, default: Date.now },
-  remarks: { type: String }
+  remarks: { type: String, trim: true }
 });
 
 userSchema.methods.validPassword = function (password) {
