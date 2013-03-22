@@ -26,6 +26,6 @@ app.get('/api/locations', locations.list);
 
 // Slides
 app.get('/api/slides', slides.list);
-app.get('/api/slides/:location', slides.list);
+app.get('/api/slides/:location_id', slides.list);
 // app.post('/api/slides', slides.create);
 // app.delete('/api/slides', slides.delete)

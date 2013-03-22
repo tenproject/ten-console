@@ -26,8 +26,11 @@ html(lang="en")
 
       section.top-bar-section
         ul.left
+          li.divider
+          li
+            a(href='/api') API Documentation
+          li.divider
           - if (user)
-            li.divider
             - if (user && user.isAdmin)
               li
                 a(href='/organizations') Organizations
@@ -38,9 +41,6 @@ html(lang="en")
             li
               a(href='/slides') Slides
             li.divider
-          //- li
-          //-   a(href='/api') API Documentation
-          //- li.divider
         ul.right
           - if (!user)
             li.divider

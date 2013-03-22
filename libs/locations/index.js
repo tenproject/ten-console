@@ -27,6 +27,7 @@ app.get('/locations', mixin.ensureAuthenticated, function (req, res) {
     database.Location.find({})
       .sort('field -_id')
       .populate('user', 'username')
+      .populate('organization', 'name')
       .exec(function (err, docs) {
         res.locals.locations = docs;
         res.render('locations');
@@ -35,7 +36,14 @@ app.get('/locations', mixin.ensureAuthenticated, function (req, res) {
 });
 
 app.get('/locations/create', mixin.ensureAuthenticated, function (req, res) {
-  res.render('create');
+  database.Organization
+    .find({ _id: { $in: req.user.organization }})
+    .select('-__v -created_by -time_created')
+    .exec(function (err, doc) {
+      console.log(doc);
+      res.locals.organizations = doc;
+      res.render('create');
+    });
 });
 
 app.post('/locations/create', mixin.ensureAuthenticated, function (req, res) {

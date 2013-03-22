@@ -2,10 +2,10 @@ var mongoose = require('mongoose'),
     database = require('../database');
 
 exports.list = function (req, res) {
-  if (req.param('location')) {
+  if (req.param('location_id')) {
     // Display all online slides for specified location
     database.Slide
-      .find({ status: 'online', location: { $in: [req.param('location')] } })
+      .find({ status: 'online', location: { $in: [req.param('location_id')] } })
       .populate('location', 'name')
       .populate('user', 'username') // populates username & _id only
       .select('-location -__v -remarks -time_created -organization -status')

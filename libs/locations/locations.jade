@@ -18,6 +18,7 @@ block content
         thead
           tr
             th Status
+            th Organization
             th Name
             th Building
             th Remarks
@@ -28,6 +29,8 @@ block content
             //- tr(onclick="window.location.href = '/locations/edit/#{location._id}'")
             tr
               td= location.status
+              td
+                a(href="/organizations/#{location.organization._id}") #{location.organization.name}
               td= location.name
               td= location.building
               td= location.remarks
