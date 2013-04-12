@@ -2,6 +2,7 @@ var express = require('express'),
     database = require('../database'),
     mixin = require('../mixin'),
     request = require('request');
+    _ = require('lodash');
 
 var slides = require('../api/slides');
 
@@ -97,6 +98,9 @@ app.get('/slides/edit/:slide', mixin.ensureAuthenticated, function(req, res) {
               .exec(function (err, locations) {
                 res.locals.organizations = organizations;
                 res.locals.locations = locations || null;
+
+                slide.location = _.pluck(slide.location, "_id");
+
                 res.locals.slide = slide;
                 res.render('edit');
               });
