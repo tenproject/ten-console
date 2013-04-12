@@ -33,7 +33,8 @@ var userSchema = mongoose.Schema({
 });
 
 var locationSchema = mongoose.Schema({
-  name: { type: String, required:true, trim: true },
+  name: { type: String, required: true, trim: true },
+  slug: { type: String, required: true, trim: true },
   building: { type: String, required: true, trim: true },
   user: { type: mongoose.Schema.ObjectId, ref: 'User' },
   remarks: { type: String },

@@ -92,21 +92,20 @@ app.use(function(req, res, next) {
 // expose template view handlers
 app.use(require('./libs/view')());
 
-// ten app modules
+// initialize ten app modules
 app.use(require('./libs/login'));
 app.use(require('./libs/api'));
 app.use(require('./libs/users'));
 app.use(require('./libs/slides'));
 app.use(require('./libs/organizations'));
 app.use(require('./libs/locations'));
+app.use(require('./libs/client'));
 
 // route middleware
 app.use(app.router);
 
-app.get('/', function(req, res) {
-  res.render('index', {
-    user: req.user
-  });
+app.get('/', function (req, res) {
+  res.render('index');
 });
 
 app.get('/console', mixin.ensureAuthenticated, function(req, res) {

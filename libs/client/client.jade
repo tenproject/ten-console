@@ -1,0 +1,57 @@
+<link rel="stylesheet" href="/responsiveslides.css">
+style
+  body {
+    margin: 0px;
+  }
+
+<!-- REST API ENDPOINT FOR LOCATION -->
+div(id="location", style="display: none") /api/slides/#{location}
+
+
+<!-- REST API ENDPOINT FOR LOCATION -->
+ul.rslides(id="slider1")
+  li
+    img(src="http://placehold.it/1920x1080&text=API service is unresponsive, please contact TEN@EUS.mcgill.ca", alt="")
+
+
+<!-- MAIN JAVASCRIPT -->
+<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.8.3/jquery.min.js"></script>
+<script src="/responsiveslides.js"></script>
+
+script
+  $(function () {
+
+    // Slideshow 1
+    $("#slider1").responsiveSlides({
+      maxwidth: 1920,
+      speed: 800,
+      interval: 100,
+      auto: true
+    });
+
+    $.getJSON($('#location').html(), function (data) {
+      if (data.length > 0) {
+        console.log(data.length + " slides found for location")
+        populate(data);
+      } else {
+        console.log("No slides for location");
+      }
+    });
+  });
+
+  function populate(data) {
+    $('#slider1').html('');
+
+    $.each(data, function(key,val) {
+      console.log(val);
+      $('#slider1').append("<li><img src='" + val.source_url + "' alt='' /></li>");
+    });
+
+    $("#slider1").responsiveSlides({
+      maxwidth: 1920,
+      speed: 800,
+      interval: 100,
+      auto: true
+    });
+
+  }

@@ -25,6 +25,7 @@ exports.list = function (req, res) {
       .sort('field -_id') // sort by ID chronological
       .select('-__v -remarks -time_created -organization -status')
       .exec(function (err, slides) {
+        console.log(slides);
         res.json(slides);
       });
   }

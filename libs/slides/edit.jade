@@ -9,12 +9,16 @@ block append head
         beforeSend: function (request) {
             request.setRequestHeader('X-CSRF-Token', '#{csrftoken}');
         },
-      }).success(function( obj, status, xhr ) {
-        window.location.replace("/slides");
-      }).error(function(XMLHttpRequest, textStatus, errorThrown) {
-        alert("Status: " + textStatus);
-        alert("Error: " + errorThrown);
-      });
+        success: function( obj, status, xhr ) {
+          console.log(status);
+          console.log('status');
+          window.location.replace("/slides");
+        },
+        error: function(XMLHttpRequest, textStatus, errorThrown) {
+          alert("Status: " + textStatus);
+          alert("Error: " + errorThrown);
+        }
+      })
     };
 
 block content

@@ -86,8 +86,9 @@ block content
                   ul.inline-list
                     li
                       a(href="/slides/#{slide._id}") show
-                    li
-                      a(href="/slides/edit/#{slide._id}") edit
+                    - if (slide.user._id == user._id)
+                      li
+                        a(href="/slides/edit/#{slide._id}") edit
           - else
             tr
               td
