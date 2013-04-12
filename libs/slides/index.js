@@ -228,12 +228,16 @@ app.get('/slides/:slide', mixin.ensureAuthenticated, function(req, res) {
     .populate('location', 'name')
     .populate('user', 'username')
     .exec(function (err, slide) {
-      if (err) {
-        console.log(err)
-        res.send(err);
-        return;
-      }
+      if (err) return res.send(err);
       res.locals.slide = slide;
+
+      // Does use have rights to access slide details?
+      if (req.user.isAdmin || (req.user.name == slide.user.name)) {
+        res.locals.viewable = true;
+      } else {
+        res.locals.viewable = false;
+      }
+
       res.render('show');
     });
 });

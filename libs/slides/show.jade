@@ -5,7 +5,7 @@ block content
     h3.subheader Slide Viewer
 
     - if (slide)
-      - if (user._id == slide.user._id || user.isAdmin)
+      - if (viewable)
         h5.subheader Title:
         p #{slide.title}
         h5.subheader Description:
