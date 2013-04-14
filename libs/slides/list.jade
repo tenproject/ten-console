@@ -86,7 +86,7 @@ block content
                   ul.inline-list
                     li
                       a(href="/slides/#{slide._id}") show
-                    - if (slide.user._id == user._id)
+                    - if (slide.user._id == user._id || user.isAdmin)
                       li
                         a(href="/slides/edit/#{slide._id}") edit
           - else

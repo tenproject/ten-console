@@ -42,7 +42,7 @@ block content
             h5.subheader Location:
             if locations
               each location in locations
-                <label for="checkbox#{location._id}"><input type="checkbox" id="checkbox#{location._id}" style="display: none;" value="#{location._id}"><span class="custom checkbox"></span> #{location.organization.name}/#{location.name}</label>
+                <label for="checkbox#{location._id}"><input type="checkbox" id="checkbox#{location._id}" style="display: none;" value="#{location._id}" name="location[]"><span class="custom checkbox"></span> #{location.organization.name}/#{location.name}</label>
 
         br
 

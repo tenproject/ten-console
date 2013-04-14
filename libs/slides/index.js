@@ -42,7 +42,7 @@ app.post('/slides/create', mixin.ensureAuthenticated, function(req, res) {
       res.locals.msg = err;
       res.render('create');
     } else {
-      res.redirect('/console');
+      res.redirect('/slides');
     }
   });
 
