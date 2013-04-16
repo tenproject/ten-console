@@ -44,7 +44,7 @@ script
 
     $.each(data, function(key,val) {
       console.log(val);
-      $('#slider1').append("<li><img src='" + val.source_url + "' alt='' /></li>");
+      $('#slider1').prepend("<li><img src='" + val.source_url + "' alt='' /></li>");
     });
 
     $("#slider1").responsiveSlides({
