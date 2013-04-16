@@ -110,6 +110,7 @@ app.get('/slides/edit/:slide', mixin.ensureAuthenticated, function(req, res) {
 
 app.post('/slides/edit/:slide', mixin.ensureAuthenticated, function(req, res) {
   console.log(req.body);
+
   if (!req.body.location) {
     req.body.location = [];
   }

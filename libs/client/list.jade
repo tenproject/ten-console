@@ -1,5 +1,6 @@
-p List of Locations
+h3 List of Locations
 ul
   each location in locations
     li
-      a(href="/client/#{location.id}") #{location.name}
+      a(href="/client/#{location.id}")
+        p.lead #{location.name}
